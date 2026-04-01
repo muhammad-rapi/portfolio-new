@@ -1,0 +1,38 @@
+---
+interface Props {
+  locale?: 'en' | 'id';
+  name?: string;
+}
+
+const { locale = 'en', name = 'Your Name' } = Astro.props;
+const t = await import(`../i18n/${locale}.json`);
+
+const year = new Date().getFullYear();
+---
+
+<footer class="py-8 border-t" style="border-color: var(--color-ink-faint);">
+  <div class="container-wide">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <!-- Left -->
+      <div class="flex items-center gap-6">
+        <a
+          href={locale === 'en' ? '/' : '/id'}
+          class="font-display font-bold text-base link-underline"
+          style="color: var(--color-ink);"
+        >
+          {name}
+        </a>
+        <span class="text-xs font-mono" style="color: var(--color-ink-muted);">
+          &copy; {year} — {t.footer.copyright}
+        </span>
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center gap-1">
+        <span class="text-xs font-mono" style="color: var(--color-ink-muted);">
+          {t.footer.built}
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,184 @@
+---
+interface Props {
+  locale?: 'en' | 'id';
+}
+const { locale = 'en' } = Astro.props;
+const t = await import(`../i18n/${locale}.json`);
+const currentPath = Astro.url.pathname;
+const langPrefix = locale === 'id' ? '/id' : '';
+---
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="container-wide">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a
+        href={langPrefix + '/'}
+        class="font-display font-bold text-xl tracking-tight link-underline"
+        style="color: var(--color-ink);"
+      >
+        YN<span style="color: var(--color-ink-muted);">.</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+          {t.nav.about}
+        </a>
+        <a href="#work" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+          {t.nav.work}
+        </a>
+        <a href="#skills" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+          {t.nav.skills}
+        </a>
+        <a href="#contact" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+          {t.nav.contact}
+        </a>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Locale Toggle -->
+        <a
+          href={locale === 'en' ? '/id' : '/'}
+          class="text-xs font-mono px-2.5 py-1 rounded border transition-colors"
+          style="border-color: var(--color-ink-faint); color: var(--color-ink-muted);"
+          aria-label="Switch language"
+        >
+          {locale === 'en' ? 'ID' : 'EN'}
+        </a>
+
+        <!-- Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="p-2 rounded transition-colors"
+          style="color: var(--color-ink-muted);"
+          aria-label="Toggle theme"
+        >
+          <!-- Sun (shown in dark mode) -->
+          <svg id="sun-icon" class="hidden w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <!-- Moon (shown in light mode) -->
+          <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Mobile Hamburger -->
+        <button
+          id="mobile-toggle"
+          class="md:hidden hamburger flex flex-col gap-1.5 p-2"
+          aria-label="Toggle mobile menu"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden absolute top-16 right-0 left-0 border-b"
+    style="background-color: var(--color-surface); border-color: var(--color-ink-faint);"
+  >
+    <div class="container-wide py-6 flex flex-col gap-4">
+      <a href="#about" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.about}</a>
+      <a href="#work" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.work}</a>
+      <a href="#skills" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.skills}</a>
+      <a href="#contact" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.contact}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar?.classList.add('nav-blur', 'border-b');
+      navbar?.style.setProperty('background-color', 'rgba(250,250,250,0.9)');
+    } else {
+      navbar?.classList.remove('nav-blur', 'border-b');
+      navbar?.style.removeProperty('background-color');
+    }
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const sunIcon = document.getElementById('sun-icon');
+  const moonIcon = document.getElementById('moon-icon');
+
+  function applyTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      sunIcon?.classList.remove('hidden');
+      moonIcon?.classList.add('hidden');
+    } else {
+      sunIcon?.classList.add('hidden');
+      moonIcon?.classList.remove('hidden');
+    }
+  }
+
+  // Init theme
+  const currentTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(currentTheme);
+
+  themeToggle?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  });
+
+  // Dark mode CSS variables
+  const darkStyles = `
+    [data-theme="dark"] { --color-bg: #0A0A0A; --color-surface: #141414; --color-ink: #FAFAFA; --color-ink-muted: #888888; --color-ink-faint: #2A2A2A; --color-accent: #FAFAFA; }
+    [data-theme="dark"] body { background-color: var(--color-bg); color: var(--color-ink); }
+    [data-theme="dark"] .navbar-bg { background-color: rgba(10,10,10,0.9); }
+    [data-theme="dark"] .project-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    [data-theme="dark"] .browser-mockup { border-color: #2A2A2A; }
+    [data-theme="dark"] .browser-mockup::before { background-color: #1a1a1a; border-color: #2A2A2A; }
+  `;
+  const styleEl = document.createElement('style');
+  styleEl.textContent = darkStyles;
+  document.head.appendChild(styleEl);
+
+  // Mobile menu
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileToggle?.addEventListener('click', () => {
+    mobileToggle.classList.toggle('open');
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileToggle?.classList.remove('open');
+      mobileMenu?.classList.add('hidden');
+    });
+  });
+
+  // Active nav link highlight
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = (section as HTMLElement).offsetTop - 100;
+      if (window.scrollY >= top) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.style.color = '';
+      if (link.getAttribute('href') === `#${current}`) {
+        link.style.color = 'var(--color-ink)';
+      }
+    });
+  });
+</script>

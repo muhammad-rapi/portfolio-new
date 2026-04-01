@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-bg: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-ink: #0A0A0A;
+  --color-ink-muted: #6B6B6B;
+  --color-ink-faint: #E0E0E0;
+  --color-accent: #0A0A0A;
+  --color-accent-hover: #333333;
+
+  /* Fonts */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Easing */
+  --ease-smooth: cubic-bezier(0.25, 0, 0, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-bg);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-faint);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-muted);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes draw-line {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s var(--ease-smooth) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s var(--ease-smooth) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.35s var(--ease-smooth) forwards;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* Intersection Observer target */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Link underline animation */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.25s var(--ease-smooth);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Button press effect */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Project card hover */
+.project-card {
+  transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth);
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+.project-card .project-image {
+  transition: transform 0.4s var(--ease-smooth);
+}
+.project-card:hover .project-image {
+  transform: scale(1.03);
+}
+
+/* Grid dot pattern */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--color-ink-faint) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Nav blur */
+.nav-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--color-ink);
+  white-space: nowrap;
+  animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--color-ink); }
+}
+
+/* Timeline */
+.timeline-line {
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-ink-faint);
+}
+.timeline-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--color-ink);
+  background: var(--color-bg);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* Browser mockup frame */
+.browser-mockup {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--color-ink-faint);
+}
+.browser-mockup::before {
+  content: '';
+  display: block;
+  height: 28px;
+  background: #F0F0F0;
+  border-bottom: 1px solid var(--color-ink-faint);
+  background-image:
+    radial-gradient(circle, #FF5F57 4px, transparent 4px),
+    radial-gradient(circle, #FFBD2E 4px, transparent 4px),
+    radial-gradient(circle, #28CA41 4px, transparent 4px);
+  background-position: 8px center, 22px center, 36px center;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  border: 1px solid var(--color-ink-faint);
+  color: var(--color-ink-muted);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.badge:hover {
+  background-color: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
+}
+
+/* Container */
+.container-narrow {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.container-wide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Section spacing */
+.section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+/* Hamburger */
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--color-ink);
+  transition: transform 0.25s, opacity 0.25s;
+}
+.hamburger.open .hamburger-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open .hamburger-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}

@@ -1,0 +1,166 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects
+    .filter(p => p.id.endsWith('en'))
+    .map(p => ({
+      params: { slug: p.id.replace(/en$/, '') },
+      props: { project: p },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const locale = 'en';
+
+const t = await import(`../../i18n/${locale}.json`);
+---
+
+<Base
+  locale={locale}
+  title={`${project.data.title} — Your Name`}
+  description={project.data.description}
+  image={project.data.image}
+>
+  <!-- Hero -->
+  <section class="pt-32 pb-16" style="padding-top: calc(64px + 64px);">
+    <div class="container-narrow">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-mono mb-12 link-underline"
+        style="color: var(--color-ink-muted);"
+      >
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        {t.common.back}
+      </a>
+
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        {project.data.tags.map(tag => (
+          <span class="badge">{tag}</span>
+        ))}
+      </div>
+
+      <!-- Title -->
+      <h1
+        class="font-display font-extrabold mb-4"
+        style="font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -0.04em; color: var(--color-ink);"
+      >
+        {project.data.title}
+      </h1>
+
+      <!-- Year + Links -->
+      <div class="flex flex-wrap items-center gap-4 mb-12">
+        <span class="font-mono text-sm" style="color: var(--color-ink-muted);">
+          {project.data.year}
+        </span>
+        {project.data.liveUrl && (
+          <a
+            href={project.data.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-medium link-underline"
+            style="color: var(--color-ink);"
+          >
+            {t.projects.view_live}
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+          </a>
+        )}
+        {project.data.repoUrl && (
+          <a
+            href={project.data.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-medium link-underline"
+            style="color: var(--color-ink-muted);"
+          >
+            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Source Code
+          </a>
+        )}
+      </div>
+
+      <!-- Screenshot -->
+      {project.data.image && (
+        <div class="browser-mockup mb-16 overflow-hidden">
+          <img
+            src={project.data.image}
+            alt={project.data.title}
+            class="w-full"
+            loading="eager"
+          />
+        </div>
+      )}
+
+      <!-- Content -->
+      <article
+        class="prose-content"
+        style="
+          color: var(--color-ink-muted);
+          line-height: 1.8;
+        "
+      >
+        <Content />
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prose-content :global(h1),
+  .prose-content :global(h2),
+  .prose-content :global(h3) {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+  }
+  .prose-content :global(p) {
+    margin-bottom: 1.25em;
+  }
+  .prose-content :global(a) {
+    color: var(--color-ink);
+    text-decoration: underline;
+  }
+  .prose-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-ink-faint);
+    padding: 0.125em 0.375em;
+    border-radius: 3px;
+  }
+  .prose-content :global(pre) {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    padding: 1.5em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1.5em 0;
+  }
+  .prose-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+  .prose-content :global(img) {
+    max-width: 100%;
+    border-radius: 4px;
+    margin: 1.5em 0;
+  }
+  .prose-content :global(ul),
+  .prose-content :global(ol) {
+    padding-left: 1.5em;
+    margin-bottom: 1.25em;
+  }
+  .prose-content :global(li) {
+    margin-bottom: 0.5em;
+  }
+</style>

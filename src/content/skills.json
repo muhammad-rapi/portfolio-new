@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "name": "Frontend",
+      "nameId": "Frontend",
+      "skills": ["React", "Next.js", "Astro", "Vue.js", "TypeScript", "Tailwind CSS", "Framer Motion", "CSS / SCSS"]
+    },
+    {
+      "name": "Backend",
+      "nameId": "Backend",
+      "skills": ["Node.js", "Python", "PostgreSQL", "MongoDB", "Redis", "GraphQL", "REST APIs", "Docker"]
+    },
+    {
+      "name": "Tools & DevOps",
+      "nameId": "Tools & DevOps",
+      "skills": ["Git", "GitHub", "Vercel", "Netlify", "Figma", "Linear", "Notion", "CI/CD"]
+    },
+    {
+      "name": "Design",
+      "nameId": "Design",
+      "skills": ["UI/UX Design", "Figma", "Design Systems", "Prototyping", "Responsive Design", "Accessibility"]
+    }
+  ]
+}

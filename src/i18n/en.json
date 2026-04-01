@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "about": "About",
+    "work": "Work",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "role": "Full-Stack Developer & UI Engineer",
+    "tagline": "I craft fast, beautiful, and purposeful digital experiences that make an impact.",
+    "cta_work": "View My Work",
+    "cta_cv": "Download CV",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "label": "About Me",
+    "headline": "I build things that live on the web.",
+    "bio1": "A passionate full-stack developer with a keen eye for design and a love for clean, performant code. I specialize in building web applications that are not just functional, but delightful to use.",
+    "bio2": "With years of experience across the stack, I bring ideas from concept to production — shipping products that are fast, accessible, and maintainable.",
+    "bio3": "When I'm not coding, you'll find me exploring new technologies, contributing to open source, or refining my craft one pull request at a time.",
+    "stats": {
+      "years": "Years Experience",
+      "projects": "Projects Delivered",
+      "clients": "Happy Clients"
+    }
+  },
+  "projects": {
+    "label": "Selected Work",
+    "view_all": "View All Projects",
+    "view_case": "View Case Study",
+    "view_live": "Live Site",
+    "year": "Year"
+  },
+  "skills": {
+    "label": "Skills & Tools",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools & DevOps",
+    "design": "Design"
+  },
+  "experience": {
+    "label": "Experience"
+  },
+  "contact": {
+    "label": "Let's Talk",
+    "headline": "Have a project in mind?",
+    "sub": "I'm open to freelance projects, collaborations, and full-time opportunities. Let's build something great together.",
+    "email": "Send Email",
+    "social": "Find me online"
+  },
+  "footer": {
+    "copyright": "Made with precision.",
+    "built": "Built with Astro & Tina CMS"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "back": "Back",
+    "read_more": "Read More"
+  },
+  "seo": {
+    "title": "Portfolio",
+    "description": "Full-Stack Developer & UI Engineer. Building fast, beautiful, and purposeful digital experiences."
+  }
+}

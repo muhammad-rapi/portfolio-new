@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import ProjectsGrid from '../../components/ProjectsGrid.astro';
+import Skills from '../../components/Skills.astro';
+import Timeline from '../../components/Timeline.astro';
+import Contact from '../../components/Contact.astro';
+
+const locale = 'id';
+---
+
+<Base
+  locale={locale}
+  title="Nama Anda — Full-Stack Developer & UI Engineer"
+  description="Full-Stack Developer & UI Engineer. Membangun pengalaman digital yang cepat, indah, dan penuh makna."
+>
+  <Hero locale={locale} name="Nama Anda" />
+  <About locale={locale} name="Nama Anda" />
+  <ProjectsGrid locale={locale} limit={4} />
+  <Skills locale={locale} />
+  <Timeline locale={locale} />
+  <Contact locale={locale} />
+</Base>

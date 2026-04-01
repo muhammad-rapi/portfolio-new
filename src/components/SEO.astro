@@ -1,0 +1,61 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  locale?: 'en' | 'id';
+  type?: 'website' | 'article';
+  canonical?: string;
+}
+
+const {
+  title = 'Your Name — Portfolio',
+  description = 'Full-Stack Developer & UI Engineer. Building fast, beautiful, and purposeful digital experiences.',
+  image = '/og-image.svg',
+  locale = 'en',
+  type = 'website',
+} = Astro.props;
+
+const siteUrl = 'https://yourname.dev';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={locale === 'id' ? 'id_ID' : 'en_US'} />
+<meta property="og:site_name" content="Your Name — Portfolio" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+  {JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Your Name",
+    "url": siteUrl,
+    "jobTitle": "Full-Stack Developer & UI Engineer",
+    "description": description,
+    "sameAs": [
+      "https://github.com/yourusername",
+      "https://linkedin.com/in/yourusername",
+      "https://x.com/yourusername"
+    ]
+  })}
+</script>

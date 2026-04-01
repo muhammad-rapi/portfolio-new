@@ -1,0 +1,73 @@
+---
+interface Props {
+  locale?: 'en' | 'id';
+}
+
+const { locale = 'en' } = Astro.props;
+const t = await import(`../i18n/${locale}.json`);
+
+const skills = {
+  frontend: {
+    name: locale === 'id' ? 'Frontend' : 'Frontend',
+    skills: ['React', 'Next.js', 'Astro', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'CSS / SCSS'],
+  },
+  backend: {
+    name: locale === 'id' ? 'Backend' : 'Backend',
+    skills: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'GraphQL', 'REST APIs', 'Docker'],
+  },
+  tools: {
+    name: locale === 'id' ? 'Tools & DevOps' : 'Tools & DevOps',
+    skills: ['Git', 'GitHub', 'Vercel', 'Netlify', 'Figma', 'Linear', 'Notion', 'CI/CD'],
+  },
+  design: {
+    name: locale === 'id' ? 'Design' : 'Design',
+    skills: ['UI/UX Design', 'Figma', 'Design Systems', 'Prototyping', 'Responsive Design', 'Accessibility'],
+  },
+};
+---
+
+<section id="skills" class="section" style="background-color: var(--color-surface);">
+  <div class="container-wide">
+    <!-- Label -->
+    <p class="reveal font-mono text-xs mb-3 tracking-widest uppercase" style="color: var(--color-ink-muted);">
+      {t.skills.label}
+    </p>
+    <h2
+      class="reveal font-display font-bold mb-16"
+      style="font-size: clamp(1.75rem, 4vw, 3rem); letter-spacing: -0.03em; color: var(--color-ink);"
+    >
+      What I Work With
+    </h2>
+
+    <!-- Skills Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {Object.entries(skills).map(([key, category], catIndex) => (
+        <div class="reveal" style={`transition-delay: ${catIndex * 80}ms;`}>
+          <!-- Category Label -->
+          <p
+            class="font-mono text-xs mb-4 pb-2"
+            style="
+              color: var(--color-ink-muted);
+              border-bottom: 1px solid var(--color-ink-faint);
+              letter-spacing: 0.1em;
+            "
+          >
+            {category.name.toUpperCase()}
+          </p>
+
+          <!-- Skills List -->
+          <div class="flex flex-wrap gap-2">
+            {category.skills.map((skill, skillIndex) => (
+              <span
+                class="badge"
+                style={`transition-delay: ${(catIndex * category.skills.length + skillIndex) * 30}ms;`}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  locale?: 'en' | 'id';
+  canonical?: string;
+}
+
+const {
+  title = 'Your Name',
+  description = 'Full-Stack Developer & UI Engineer',
+  image = '/og-image.svg',
+  locale = 'en',
+  canonical,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale === 'id' ? 'id' : 'en'} data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO title={title} description={description} image={image} locale={locale} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Theme initialization (prevent flash) -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <Navbar locale={locale} />
+    <main>
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <script>
+      // Intersection Observer for scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

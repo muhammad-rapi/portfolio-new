@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — Page Not Found" description="This page doesn't exist.">
+  <section class="min-h-screen flex items-center justify-center" style="padding-top: 64px;">
+    <div class="container-narrow text-center">
+      <p class="font-mono text-xs mb-4 tracking-widest" style="color: var(--color-ink-muted);">404</p>
+      <h1
+        class="font-display font-extrabold mb-6"
+        style="font-size: clamp(3rem, 10vw, 7rem); letter-spacing: -0.05em; color: var(--color-ink);"
+      >
+        Not Found.
+      </h1>
+      <p class="text-base mb-10" style="color: var(--color-ink-muted);">
+        This page doesn't exist or has been moved.
+      </p>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all"
+        style="background-color: var(--color-ink); color: var(--color-bg);"
+      >
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Go Home
+      </a>
+    </div>
+  </section>
+</Base>

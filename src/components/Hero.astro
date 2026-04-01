@@ -1,0 +1,113 @@
+---
+interface Props {
+  locale?: 'en' | 'id';
+  name?: string;
+}
+const { locale = 'en', name = 'Your Name' } = Astro.props;
+const t = await import(`../i18n/${locale}.json`);
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen flex flex-col justify-center overflow-hidden dot-grid"
+  style="padding-top: 64px;"
+>
+  <div class="container-wide py-24 md:py-32">
+    <!-- Greeting line -->
+    <p
+      class="animate-fade-up font-mono text-sm mb-6"
+      style="color: var(--color-ink-muted);"
+    >
+      {t.hero.greeting}
+    </p>
+
+    <!-- Display Name -->
+    <h1
+      class="animate-fade-up delay-100 font-display font-extrabold mb-4 leading-none"
+      style="
+        font-size: clamp(3rem, 10vw, 7.5rem);
+        letter-spacing: -0.04em;
+        color: var(--color-ink);
+      "
+    >
+      {name}
+    </h1>
+
+    <!-- Role -->
+    <div
+      class="animate-fade-up delay-200 mb-6 overflow-hidden"
+    >
+      <p
+        class="font-display font-bold"
+        style="
+          font-size: clamp(1.25rem, 4vw, 2.5rem);
+          letter-spacing: -0.02em;
+          color: var(--color-ink-muted);
+        "
+      >
+        {t.hero.role}
+      </p>
+    </div>
+
+    <!-- Tagline -->
+    <p
+      class="animate-fade-up delay-300 text-base md:text-lg mb-10 max-w-xl leading-relaxed"
+      style="color: var(--color-ink-muted);"
+    >
+      {t.hero.tagline}
+    </p>
+
+    <!-- CTAs -->
+    <div class="animate-fade-up delay-400 flex flex-wrap gap-4">
+      <a
+        href="#work"
+        class="btn-press inline-flex items-center gap-2 px-6 py-3 rounded-none font-medium text-sm transition-all duration-200"
+        style="
+          background-color: var(--color-ink);
+          color: var(--color-bg);
+          border: 1.5px solid var(--color-ink);
+        "
+      >
+        {t.hero.cta_work}
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a
+        href="/cv.pdf"
+        class="btn-press inline-flex items-center gap-2 px-6 py-3 rounded-none font-medium text-sm transition-all duration-200"
+        style="
+          background-color: transparent;
+          color: var(--color-ink);
+          border: 1.5px solid var(--color-ink-faint);
+        "
+      >
+        {t.hero.cta_cv}
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-up delay-700">
+    <span class="text-xs font-mono" style="color: var(--color-ink-muted); writing-mode: vertical-rl;">{t.hero.scroll}</span>
+    <div class="w-px h-8 overflow-hidden" style="background: var(--color-ink-faint);">
+      <div
+        class="w-full h-full"
+        style="
+          background: var(--color-ink-muted);
+          animation: scroll-indicator 2s ease-in-out infinite;
+        "
+      ></div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes scroll-indicator {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(200%); }
+    }
+  </style>
+</section>
