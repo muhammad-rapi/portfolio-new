@@ -10,8 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "tinacms": "tinacms dev --noTelemetry",
-    "tinacms:build": "tinacms build --noTelemetry",
+    "tinacms": "tinacms dev --noTelemetry --datalayer-port 9001",
     "tinacms:build": "tinacms build --noTelemetry"
   },
   "dependencies": {

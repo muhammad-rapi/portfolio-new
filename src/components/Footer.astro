@@ -6,15 +6,18 @@ interface Props {
 
 const { locale = 'en', name = 'Your Name' } = Astro.props;
 const year = new Date().getFullYear();
+const t = await import(`../i18n/${locale}.json`);
 ---
 
-<footer class="py-8 border-t" style="border-color: var(--color-ink-faint);">
+<footer class="py-8" style="border-top: 1px solid var(--color-ink-faint);">
   <div class="container-wide">
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-      <div class="flex items-center gap-4">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+
+      <!-- Left: name + year -->
+      <div class="flex items-center gap-3">
         <a
           href={locale === 'en' ? '/' : '/id'}
-          class="font-display font-bold text-sm"
+          class="font-display font-bold text-sm tracking-tight"
           style="color: var(--color-ink);"
         >
           {name}
@@ -23,9 +26,17 @@ const year = new Date().getFullYear();
           &copy; {year}
         </span>
       </div>
-      <p class="font-mono text-xs" style="color: var(--color-ink-muted);">
-        Built with Astro &amp; Tina CMS
+
+      <!-- Center: tagline -->
+      <p class="font-mono text-xs hidden sm:block" style="color: var(--color-ink-muted);">
+        {t.footer.copyright}
       </p>
+
+      <!-- Right: built with -->
+      <p class="font-mono text-xs" style="color: var(--color-ink-muted);">
+        {locale === 'en' ? 'Built with Astro & Tina CMS' : 'Dibangun dengan Astro & Tina CMS'}
+      </p>
+
     </div>
   </div>
 </footer>

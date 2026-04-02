@@ -25,16 +25,20 @@ const filtered = allProjects
   <div class="container-wide">
     <!-- Header -->
     <div class="flex items-end justify-between mb-14">
-      <div>
-        <p class="reveal font-mono text-xs mb-3 tracking-widest" style="color: var(--color-ink-muted);">
-          {t.projects.label}
+      <div class="reveal">
+        <p class="font-mono text-xs mb-3 tracking-widest" style="color: var(--color-ink-muted);">
+          {t.projects.label.toUpperCase()}
         </p>
         <h2
-          class="reveal font-display font-bold"
-          style="font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.03em; color: var(--color-ink);"
+          class="font-display font-bold"
+          style="font-size: clamp(1.75rem, 4vw, 2.75rem); letter-spacing: -0.04em; color: var(--color-ink); line-height: 1;"
         >
-          Selected Work
+          Things I've<br/>Built
         </h2>
+      </div>
+      <div class="hidden sm:block">
+        <div class="w-16 h-px mb-2" style="background: var(--color-ink-faint);"></div>
+        <p class="font-mono text-xs" style="color: var(--color-ink-muted);">{filtered.length} {locale === 'en' ? 'projects' : 'proyek'}</p>
       </div>
     </div>
 
