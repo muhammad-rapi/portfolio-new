@@ -4,77 +4,93 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const t = await import(`../i18n/${locale}.json`);
-const currentPath = Astro.url.pathname;
 const langPrefix = locale === 'id' ? '/id' : '';
 ---
 
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50">
   <div class="container-wide">
     <nav class="flex items-center justify-between h-16">
       <!-- Logo -->
       <a
         href={langPrefix + '/'}
-        class="font-display font-bold text-xl tracking-tight link-underline"
-        style="color: var(--color-ink);"
+        class="font-display font-bold text-lg tracking-tight"
+        style="color: var(--nav-ink);"
       >
-        YN<span style="color: var(--color-ink-muted);">.</span>
+        YN.
       </a>
 
       <!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-8">
-        <a href="#about" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+        <a href="#about" class="nav-link text-sm transition-all duration-200 hover:opacity-50" style="color: var(--nav-muted);">
           {t.nav.about}
         </a>
-        <a href="#work" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+        <a href="#work" class="nav-link text-sm transition-all duration-200 hover:opacity-50" style="color: var(--nav-muted);">
           {t.nav.work}
         </a>
-        <a href="#skills" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
-          {t.nav.skills}
-        </a>
-        <a href="#contact" class="nav-link link-underline text-sm font-medium" style="color: var(--color-ink-muted);">
+        <a href="#contact" class="nav-link text-sm transition-all duration-200 hover:opacity-50" style="color: var(--nav-muted);">
           {t.nav.contact}
         </a>
+        <div class="flex items-center gap-3">
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle"
+            class="p-1.5 rounded transition-all duration-200 hover:opacity-50"
+            style="color: var(--nav-muted);"
+            aria-label="Toggle theme"
+          >
+            <!-- Moon icon (show in light mode) -->
+            <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <!-- Sun icon (show in dark mode) -->
+            <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+          <span style="color: var(--nav-muted); opacity: 0.3;">|</span>
+          <a
+            href={locale === 'en' ? '/id' : '/'}
+            class="text-xs font-mono transition-all duration-200 hover:opacity-50"
+            style="color: var(--nav-muted);"
+          >
+            {locale === 'en' ? 'ID' : 'EN'}
+          </a>
+        </div>
       </div>
 
-      <!-- Right Controls -->
-      <div class="flex items-center gap-3">
-        <!-- Locale Toggle -->
-        <a
-          href={locale === 'en' ? '/id' : '/'}
-          class="text-xs font-mono px-2.5 py-1 rounded border transition-colors"
-          style="border-color: var(--color-ink-faint); color: var(--color-ink-muted);"
-          aria-label="Switch language"
-        >
-          {locale === 'en' ? 'ID' : 'EN'}
-        </a>
-
-        <!-- Theme Toggle -->
+      <!-- Mobile right side -->
+      <div class="flex md:hidden items-center gap-2">
         <button
-          id="theme-toggle"
-          class="p-2 rounded transition-colors"
-          style="color: var(--color-ink-muted);"
+          id="theme-toggle-mobile"
+          class="p-1.5"
+          style="color: var(--nav-muted);"
           aria-label="Toggle theme"
         >
-          <!-- Sun (shown in dark mode) -->
-          <svg id="sun-icon" class="hidden w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-          </svg>
-          <!-- Moon (shown in light mode) -->
-          <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg id="moon-icon-mobile" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
+          <svg id="sun-icon-mobile" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+          </svg>
         </button>
-
-        <!-- Mobile Hamburger -->
-        <button
-          id="mobile-toggle"
-          class="md:hidden hamburger flex flex-col gap-1.5 p-2"
-          aria-label="Toggle mobile menu"
-        >
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
+        <button id="mobile-toggle" class="flex flex-col gap-1.5 p-2" aria-label="Menu">
+          <span class="block w-5 h-px transition-all duration-200" style="background: var(--nav-ink);"></span>
+          <span class="block w-5 h-px transition-all duration-200" style="background: var(--nav-ink);"></span>
+          <span class="block w-3 h-px transition-all duration-200" style="background: var(--nav-ink);"></span>
         </button>
       </div>
     </nav>
@@ -83,102 +99,96 @@ const langPrefix = locale === 'id' ? '/id' : '';
   <!-- Mobile Menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden absolute top-16 right-0 left-0 border-b"
-    style="background-color: var(--color-surface); border-color: var(--color-ink-faint);"
+    class="hidden md:hidden border-t"
+    style="border-color: var(--nav-border); background: var(--color-bg);"
   >
-    <div class="container-wide py-6 flex flex-col gap-4">
-      <a href="#about" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.about}</a>
-      <a href="#work" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.work}</a>
-      <a href="#skills" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.skills}</a>
-      <a href="#contact" class="mobile-link text-base font-medium" style="color: var(--color-ink);">{t.nav.contact}</a>
+    <div class="container-wide py-8 flex flex-col gap-6">
+      <a href="#about" class="mobile-link text-sm" style="color: var(--nav-muted);">{t.nav.about}</a>
+      <a href="#work" class="mobile-link text-sm" style="color: var(--nav-muted);">{t.nav.work}</a>
+      <a href="#contact" class="mobile-link text-sm" style="color: var(--nav-muted);">{t.nav.contact}</a>
+      <a href={locale === 'en' ? '/id' : '/'} class="text-xs font-mono" style="color: var(--nav-muted);">
+        {locale === 'en' ? 'Bahasa Indonesia' : 'English'}
+      </a>
     </div>
   </div>
 </header>
 
+<style>
+  /* Light mode — soft gray nav */
+  [data-theme="light"],
+  html:not([data-theme]) {
+    --nav-ink: #1A1A1A;
+    --nav-muted: #888888;
+    --nav-border: #EBEBEB;
+    --nav-bg: rgba(250,250,250,0);
+    --nav-bg-scroll: rgba(250,250,250,0.88);
+  }
+  /* Dark mode — dark nav with light text */
+  [data-theme="dark"] {
+    --nav-ink: #F0F0F0;
+    --nav-muted: #888888;
+    --nav-border: #1E1E1E;
+    --nav-bg: rgba(10,10,10,0);
+    --nav-bg-scroll: rgba(10,10,10,0.88);
+  }
+</style>
+
 <script>
-  // Scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar') as HTMLElement;
+
+  // Scroll effect — apply bg to navbar element directly
+  function updateNavbar() {
     if (window.scrollY > 20) {
-      navbar?.classList.add('nav-blur', 'border-b');
-      navbar?.style.setProperty('background-color', 'rgba(250,250,250,0.9)');
+      navbar.style.background = 'var(--nav-bg-scroll)';
+      navbar.style.backdropFilter = 'blur(16px)';
+      navbar.style.webkitBackdropFilter = 'blur(16px)';
+      navbar.style.borderBottom = '1px solid var(--nav-border)';
     } else {
-      navbar?.classList.remove('nav-blur', 'border-b');
-      navbar?.style.removeProperty('background-color');
+      navbar.style.background = 'transparent';
+      navbar.style.backdropFilter = 'none';
+      navbar.style.webkitBackdropFilter = 'none';
+      navbar.style.borderBottom = 'none';
     }
-  });
+  }
+  window.addEventListener('scroll', updateNavbar, { passive: true });
+  updateNavbar();
 
   // Theme toggle
-  const themeToggle = document.getElementById('theme-toggle');
-  const sunIcon = document.getElementById('sun-icon');
-  const moonIcon = document.getElementById('moon-icon');
-
   function applyTheme(theme: string) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
+    const moon = document.getElementById('moon-icon');
+    const sun = document.getElementById('sun-icon');
+    const moonM = document.getElementById('moon-icon-mobile');
+    const sunM = document.getElementById('sun-icon-mobile');
     if (theme === 'dark') {
-      sunIcon?.classList.remove('hidden');
-      moonIcon?.classList.add('hidden');
+      moon?.classList.add('hidden'); sun?.classList.remove('hidden');
+      moonM?.classList.add('hidden'); sunM?.classList.remove('hidden');
     } else {
-      sunIcon?.classList.add('hidden');
-      moonIcon?.classList.remove('hidden');
+      moon?.classList.remove('hidden'); sun?.classList.add('hidden');
+      moonM?.classList.remove('hidden'); sunM?.classList.add('hidden');
     }
+    updateNavbar();
   }
 
-  // Init theme
-  const currentTheme = localStorage.getItem('theme') ||
+  const savedTheme = localStorage.getItem('theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  applyTheme(currentTheme);
+  applyTheme(savedTheme);
 
-  themeToggle?.addEventListener('click', () => {
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  });
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(next);
   });
 
-  // Dark mode CSS variables
-  const darkStyles = `
-    [data-theme="dark"] { --color-bg: #0A0A0A; --color-surface: #141414; --color-ink: #FAFAFA; --color-ink-muted: #888888; --color-ink-faint: #2A2A2A; --color-accent: #FAFAFA; }
-    [data-theme="dark"] body { background-color: var(--color-bg); color: var(--color-ink); }
-    [data-theme="dark"] .navbar-bg { background-color: rgba(10,10,10,0.9); }
-    [data-theme="dark"] .project-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-    [data-theme="dark"] .browser-mockup { border-color: #2A2A2A; }
-    [data-theme="dark"] .browser-mockup::before { background-color: #1a1a1a; border-color: #2A2A2A; }
-  `;
-  const styleEl = document.createElement('style');
-  styleEl.textContent = darkStyles;
-  document.head.appendChild(styleEl);
-
   // Mobile menu
   const mobileToggle = document.getElementById('mobile-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-
-  mobileToggle?.addEventListener('click', () => {
-    mobileToggle.classList.toggle('open');
-    mobileMenu?.classList.toggle('hidden');
-  });
-
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileToggle?.classList.remove('open');
-      mobileMenu?.classList.add('hidden');
-    });
-  });
-
-  // Active nav link highlight
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const top = (section as HTMLElement).offsetTop - 100;
-      if (window.scrollY >= top) {
-        current = section.getAttribute('id') || '';
-      }
-    });
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.style.color = '';
-      if (link.getAttribute('href') === `#${current}`) {
-        link.style.color = 'var(--color-ink)';
-      }
-    });
-  });
+  mobileToggle?.addEventListener('click', () => mobileMenu?.classList.toggle('hidden'));
+  document.querySelectorAll('.mobile-link').forEach(l =>
+    l.addEventListener('click', () => mobileMenu?.classList.add('hidden'))
+  );
 </script>

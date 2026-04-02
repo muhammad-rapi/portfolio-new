@@ -1,0 +1,46 @@
+fragment ProjectsParts on Projects {
+  __typename
+  title
+  description
+  year
+  tags
+  featured
+  image
+  liveUrl
+  repoUrl
+  order
+  body
+}
+
+fragment AboutParts on About {
+  __typename
+  headline
+  stats {
+    __typename
+    label
+    value
+  }
+  image
+  body
+}
+
+fragment SkillsParts on Skills {
+  __typename
+  categories {
+    __typename
+    name
+    nameId
+    skills
+  }
+}
+
+fragment ExperienceParts on Experience {
+  __typename
+  items {
+    __typename
+    company
+    role
+    period
+    description
+  }
+}

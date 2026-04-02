@@ -6,64 +6,71 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const t = await import(`../i18n/${locale}.json`);
 
-const skills = {
-  frontend: {
-    name: locale === 'id' ? 'Frontend' : 'Frontend',
-    skills: ['React', 'Next.js', 'Astro', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'CSS / SCSS'],
+const skillGroups = [
+  {
+    name: 'Frontend',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    skills: ['React', 'Next.js', 'Astro', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
-  backend: {
-    name: locale === 'id' ? 'Backend' : 'Backend',
-    skills: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'GraphQL', 'REST APIs', 'Docker'],
+  {
+    name: 'Backend',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>`,
+    skills: ['Node.js', 'PostgreSQL', 'MongoDB', 'GraphQL', 'Docker', 'Redis'],
   },
-  tools: {
-    name: locale === 'id' ? 'Tools & DevOps' : 'Tools & DevOps',
-    skills: ['Git', 'GitHub', 'Vercel', 'Netlify', 'Figma', 'Linear', 'Notion', 'CI/CD'],
+  {
+    name: 'Tools',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    skills: ['Git', 'Vercel', 'Figma', 'CI/CD', 'Linux', 'Jest'],
   },
-  design: {
-    name: locale === 'id' ? 'Design' : 'Design',
-    skills: ['UI/UX Design', 'Figma', 'Design Systems', 'Prototyping', 'Responsive Design', 'Accessibility'],
+  {
+    name: 'Design',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`,
+    skills: ['UI/UX', 'Figma', 'Design Systems', 'Prototyping', 'Motion', 'Accessibility'],
   },
-};
+];
 ---
 
-<section id="skills" class="section" style="background-color: var(--color-surface);">
+<section id="skills" class="py-24 md:py-32" style="background-color: var(--color-surface);">
   <div class="container-wide">
-    <!-- Label -->
-    <p class="reveal font-mono text-xs mb-3 tracking-widest uppercase" style="color: var(--color-ink-muted);">
-      {t.skills.label}
-    </p>
-    <h2
-      class="reveal font-display font-bold mb-16"
-      style="font-size: clamp(1.75rem, 4vw, 3rem); letter-spacing: -0.03em; color: var(--color-ink);"
-    >
-      What I Work With
-    </h2>
+    <!-- Header -->
+    <div class="reveal flex items-center gap-4 mb-14">
+      <p class="font-mono text-xs tracking-widest" style="color: var(--color-ink-muted);">
+        {t.skills.label.toUpperCase()}
+      </p>
+      <span class="flex-1 h-px" style="background: var(--color-ink-faint);"></span>
+    </div>
 
-    <!-- Skills Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {Object.entries(skills).map(([key, category], catIndex) => (
-        <div class="reveal" style={`transition-delay: ${catIndex * 80}ms;`}>
-          <!-- Category Label -->
-          <p
-            class="font-mono text-xs mb-4 pb-2"
-            style="
-              color: var(--color-ink-muted);
-              border-bottom: 1px solid var(--color-ink-faint);
-              letter-spacing: 0.1em;
-            "
-          >
-            {category.name.toUpperCase()}
+    <!-- Skills grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {skillGroups.map((group, i) => (
+        <div
+          class="reveal group p-6 rounded-2xl transition-all duration-300 hover:shadow-lg"
+          style="
+            background: var(--color-bg);
+            border: 1px solid var(--color-ink-faint);
+            transition-delay: {i * 80}ms;
+          "
+        >
+          <!-- Group icon -->
+          <div class="w-8 h-8 mb-5 flex items-center justify-center rounded-lg" style="background: var(--color-ink); color: var(--color-bg);">
+            <span class="w-4 h-4" set:html={group.icon} style="color: var(--color-bg);" />
+          </div>
+
+          <!-- Name -->
+          <p class="font-mono text-xs mb-4 tracking-widest" style="color: var(--color-ink-muted);">
+            {group.name.toUpperCase()}
           </p>
 
-          <!-- Skills List -->
-          <div class="flex flex-wrap gap-2">
-            {category.skills.map((skill, skillIndex) => (
-              <span
-                class="badge"
-                style={`transition-delay: ${(catIndex * category.skills.length + skillIndex) * 30}ms;`}
+          <!-- Skills list -->
+          <div class="flex flex-col gap-2">
+            {group.skills.map((skill, j) => (
+              <div
+                class="flex items-center gap-2 text-sm transition-opacity duration-200 group-hover:opacity-80"
+                style={`color: var(--color-ink); transition-delay: ${j * 30}ms;`}
               >
+                <span class="w-1 h-1 rounded-full flex-shrink-0" style="background: var(--color-ink-muted);"></span>
                 {skill}
-              </span>
+              </div>
             ))}
           </div>
         </div>

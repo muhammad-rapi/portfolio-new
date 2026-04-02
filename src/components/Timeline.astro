@@ -4,7 +4,6 @@ interface Props {
 }
 
 const { locale = 'en' } = Astro.props;
-const t = await import(`../i18n/${locale}.json`);
 
 const experiences = [
   {
@@ -12,77 +11,90 @@ const experiences = [
     role: locale === 'id' ? 'Senior Full-Stack Developer' : 'Senior Full-Stack Developer',
     period: '2022 — Sekarang',
     description: locale === 'id'
-      ? 'Memimpin pengembangan aplikasi web skala enterprise dengan React dan Node.js. Meningkatkan performa aplikasi hingga 40%.'
-      : 'Led development of enterprise-scale web applications using React and Node.js. Improved application performance by 40%.',
+      ? 'Memimpin pengembangan aplikasi web skala enterprise dengan React dan Node.js.'
+      : 'Led development of enterprise web applications with React and Node.js.',
+    current: true,
   },
   {
     company: 'Startup B',
     role: locale === 'id' ? 'Frontend Developer' : 'Frontend Developer',
     period: '2020 — 2022',
     description: locale === 'id'
-      ? 'Membangun UI/UX untuk platform e-commerce menggunakan Vue.js dan Tailwind CSS. Collaborated dengan tim desain closely.'
-      : 'Built UI/UX for an e-commerce platform using Vue.js and Tailwind CSS. Collaborated closely with the design team.',
+      ? 'Membangun UI/UX platform e-commerce menggunakan Vue.js dan Tailwind CSS.'
+      : 'Built UI/UX for e-commerce platform using Vue.js and Tailwind CSS.',
+    current: false,
   },
   {
     company: 'Agency C',
     role: locale === 'id' ? 'Web Developer' : 'Web Developer',
     period: '2018 — 2020',
     description: locale === 'id'
-      ? 'Mengembangkan berbagai website klien menggunakan React dan Next.js. Shipped 15+ project berkualitas tinggi.'
-      : 'Developed various client websites using React and Next.js. Shipped 15+ high-quality projects.',
+      ? 'Mengembangkan berbagai website klien menggunakan React dan Next.js.'
+      : 'Developed client websites using React and Next.js.',
+    current: false,
   },
 ];
 ---
 
-<section id="experience" class="section">
+<section id="experience" class="py-24 md:py-32">
   <div class="container-wide">
-    <!-- Label -->
-    <p class="reveal font-mono text-xs mb-3 tracking-widest uppercase" style="color: var(--color-ink-muted);">
-      {t.experience.label}
-    </p>
-    <h2
-      class="reveal font-display font-bold mb-16"
-      style="font-size: clamp(1.75rem, 4vw, 3rem); letter-spacing: -0.03em; color: var(--color-ink);"
-    >
-      Career Path
-    </h2>
-
-    <!-- Timeline -->
-    <div class="relative max-w-2xl">
-      {experiences.map((exp, i) => (
-        <div
-          class="reveal relative pl-10 pb-12 last:pb-0"
-          style={`transition-delay: ${i * 120}ms;`}
-        >
-          <!-- Line -->
-          {i < experiences.length - 1 && (
-            <div
-              class="timeline-line"
-              style="top: 8px;"
-            ></div>
-          )}
-
-          <!-- Dot -->
-          <div class="timeline-dot absolute left-0 top-1"></div>
-
-          <!-- Content -->
-          <div>
-            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
-              <h3 class="font-display font-bold text-base" style="color: var(--color-ink);">
-                {exp.company}
-              </h3>
-              <span class="font-mono text-xs hidden sm:block" style="color: var(--color-ink-muted);">—</span>
-              <span class="font-mono text-xs" style="color: var(--color-ink-muted);">{exp.period}</span>
-            </div>
-            <p class="font-medium text-sm mb-2" style="color: var(--color-ink-muted);">
-              {exp.role}
-            </p>
-            <p class="text-sm leading-relaxed" style="color: var(--color-ink-muted);">
-              {exp.description}
-            </p>
-          </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <!-- Left label -->
+      <div class="lg:col-span-4">
+        <div class="reveal sticky top-24">
+          <p class="font-mono text-xs tracking-widest mb-3" style="color: var(--color-ink-muted);">
+            EXPERIENCE
+          </p>
+          <h2 class="font-display font-bold" style="font-size: 1.75rem; letter-spacing: -0.03em; color: var(--color-ink);">
+            Career Path
+          </h2>
+          <div class="mt-6 w-8 h-0.5 rounded-full" style="background: var(--color-ink);"></div>
         </div>
-      ))}
+      </div>
+
+      <!-- Right timeline -->
+      <div class="lg:col-span-7 lg:col-start-6">
+        {experiences.map((exp, i) => (
+          <div
+            class="reveal relative pl-8 pb-12 last:pb-0"
+            style={`transition-delay: ${i * 100}ms;`}
+          >
+            <!-- Vertical line -->
+            <div
+              class="absolute left-3 top-1 bottom-0 w-px"
+              style="background: var(--color-ink-faint);"
+            ></div>
+
+            <!-- Current indicator -->
+            {exp.current && (
+              <div class="absolute left-2.5 -top-1 w-1 h-1 rounded-full" style="background: #22c55e;"></div>
+            )}
+
+            <!-- Dot -->
+            <div
+              class="absolute left-0 top-1 w-2 h-2 rounded-full transition-all duration-300 group-hover:scale-125"
+              style="background: var(--color-ink);"
+            ></div>
+
+            <!-- Content -->
+            <div class="mb-1">
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="font-display font-bold text-base" style="color: var(--color-ink);">
+                  {exp.company}
+                </h3>
+                {exp.current && (
+                  <span class="font-mono text-xs px-2 py-0.5 rounded-full" style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.65rem;">
+                    CURRENT
+                  </span>
+                )}
+              </div>
+              <p class="text-sm mb-2" style="color: var(--color-ink-muted);">{exp.role}</p>
+              <p class="font-mono text-xs mb-3" style="color: var(--color-ink-muted);">{exp.period}</p>
+              <p class="text-sm leading-relaxed" style="color: var(--color-ink-muted);">{exp.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>

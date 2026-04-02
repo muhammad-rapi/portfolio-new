@@ -8,115 +8,82 @@ const { locale = 'en', email = 'hello@yourname.dev' } = Astro.props;
 const t = await import(`../i18n/${locale}.json`);
 ---
 
-<section id="contact" class="section" style="background-color: var(--color-ink); color: var(--color-bg);">
-  <div class="container-narrow text-center">
-    <!-- Label -->
-    <p class="reveal font-mono text-xs mb-6 tracking-widest uppercase" style="color: rgba(250,250,250,0.4);">
-      {t.contact.label}
-    </p>
+<section id="contact" class="py-24 md:py-40" style="background-color: var(--color-ink);">
+  <div class="container-wide">
 
-    <!-- Headline -->
-    <h2
-      class="reveal font-display font-extrabold mb-6"
-      style="
-        font-size: clamp(2.5rem, 7vw, 5rem);
-        letter-spacing: -0.04em;
-        line-height: 1;
-        color: var(--color-bg);
-      "
-    >
-      {t.contact.headline}
-    </h2>
-
-    <!-- Sub -->
-    <p
-      class="reveal text-base mb-12 max-w-lg mx-auto leading-relaxed"
-      style="color: rgba(250,250,250,0.55);"
-    >
-      {t.contact.sub}
-    </p>
-
-    <!-- CTA Email -->
+    <!-- Header -->
     <div class="reveal mb-16">
-      <a
-        href={`mailto:${email}?subject=${locale === 'id' ? 'Hai, saya ingin bekerja sama' : 'Hi, lets work together'}`}
-        class="btn-press inline-flex items-center gap-3 px-8 py-4 text-base font-medium transition-all duration-200"
+      <p class="font-mono text-xs mb-6 tracking-widest" style="color: rgba(250,250,250,0.4);">
+        {t.contact.label.toUpperCase()}
+      </p>
+      <h2
+        class="font-display font-bold leading-tight"
         style="
-          background-color: var(--color-bg);
-          color: var(--color-ink);
-          border: 1.5px solid var(--color-bg);
+          font-size: clamp(2.5rem, 7vw, 5rem);
+          letter-spacing: -0.04em;
+          color: var(--color-bg);
+          max-width: 700px;
         "
       >
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-          <polyline points="22,6 12,13 2,6"/>
-        </svg>
-        {t.contact.email}
-      </a>
+        {t.contact.headline}
+      </h2>
     </div>
 
-    <!-- Social Links -->
-    <div class="reveal">
-      <p class="font-mono text-xs mb-6 tracking-widest" style="color: rgba(250,250,250,0.3);">
-        {t.contact.social.toUpperCase()}
-      </p>
-      <div class="flex justify-center gap-6 flex-wrap">
-        <!-- GitHub -->
-        <a
-          href="https://github.com/yourusername"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-3 rounded transition-colors"
-          style="color: rgba(250,250,250,0.4);"
-          aria-label="GitHub"
-        >
-          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-        </a>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <!-- Left: Text -->
+      <div class="lg:col-span-6">
+        <p class="reveal text-base leading-relaxed mb-10" style="color: rgba(250,250,250,0.5);">
+          {t.contact.sub}
+        </p>
 
-        <!-- LinkedIn -->
-        <a
-          href="https://linkedin.com/in/yourusername"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-3 rounded transition-colors"
-          style="color: rgba(250,250,250,0.4);"
-          aria-label="LinkedIn"
-        >
-          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-        </a>
+        <!-- Email CTA -->
+        <div class="reveal">
+          <a
+            href={`mailto:${email}?subject=${locale === 'id' ? 'Hai, saya ingin bekerja sama' : 'Hi, lets work together'}`}
+            class="group inline-flex items-center gap-3 text-base font-medium transition-all duration-200"
+            style="color: var(--color-bg);"
+          >
+            <span class="relative">
+              {t.contact.email}
+              <span class="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full" style="background: var(--color-bg); opacity: 0.5;"></span>
+            </span>
+            <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
 
-        <!-- Twitter/X -->
-        <a
-          href="https://x.com/yourusername"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-3 rounded transition-colors"
-          style="color: rgba(250,250,250,0.4);"
-          aria-label="X / Twitter"
-        >
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-        </a>
-
-        <!-- Dribbble -->
-        <a
-          href="https://dribbble.com/yourusername"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-3 rounded transition-colors"
-          style="color: rgba(250,250,250,0.4);"
-          aria-label="Dribbble"
-        >
-          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0C5.375 0 0 5.375 0 12s5.375 12 12 12 12-5.375 12-12S18.625 0 12 0zm7.938 5.5a10.195 10.195 0 0 1 2.281 6.375c-.328-.063-3.625-.75-6.938-.313-.063-.188-.125-.406-.188-.625-.281-1.375-.562-2.75-.812-4.125 3.625-1.469 5-3.625 5.656-1.063zM7.188 3.781a10.52 10.52 0 0 1 4.156-.781c.188 0 .375.016.563.016-1.875 2.125-3.375 4.375-4.406 6.75-1.688-3.188-1.406-6.219-.312-5.984zm-2.969.938a10.72 10.72 0 0 1 2.375-1.063c-.188 1.969-.156 4.125.219 6.375C4.25 9.125 2.469 7.281 2.469 5.469c0-.125 0-.25.016-.375.188-.25.438-.5.75-.75zM1.875 12c0 .719.063 1.406.188 2.078C2.938 16.656 5.406 19 8.625 19c.813 0 1.594-.125 2.344-.344-.969 2.625-2.5 4.906-4.469 6.688-3.781-1.75-6.188-4.844-6.625-8.563.438-1.219 1.063-2.25 1.781-3.125A10.64 10.64 0 0 0 1.875 12zm5.719 1.188c.062.438.094.875.094 1.313-.063.063-.125.125-.188.188-.719.719-1.406 1.469-2.062 2.281-.063-2.969 1-5.625 2.969-7.188.5.719.906 1.5 1.219 2.344A16.77 16.77 0 0 0 7.594 13.188zm4.5 7.938c-3.031-.094-5.906-1.156-8.313-3.031 1.063-.188 2.188-.281 3.313-.281 2.969 0 5.75 1.031 7.875 2.75-1.125.469-2.344.719-3.625.719a9.92 9.92 0 0 1-.719-.063 11.44 11.44 0 0 1 .469-.094zm9.094-2.062c-.406-1.063-1.094-2.031-1.969-2.844.969-.219 2-.344 3.031-.344 1.25 0 2.438.219 3.563.625a14.23 14.23 0 0 0-2.344 2.75c-.813.062-1.656.125-2.531.188.188-.25.344-.5.469-.781a9.86 9.86 0 0 1-.219-.594z"/>
-          </svg>
-        </a>
+      <!-- Right: Social links -->
+      <div class="lg:col-span-5 lg:col-start-8 flex flex-col justify-end gap-6">
+        <div class="reveal">
+          <p class="font-mono text-xs mb-4 tracking-widest" style="color: rgba(250,250,250,0.3);">
+            FIND ME ONLINE
+          </p>
+          <div class="flex flex-col gap-3">
+            {[
+              { name: 'GitHub', url: 'https://github.com/yourusername', icon: `<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>` },
+              { name: 'LinkedIn', url: 'https://linkedin.com/in/yourusername', icon: `<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>` },
+              { name: 'X / Twitter', url: 'https://x.com/yourusername', icon: `<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>` },
+              { name: 'Dribbble', url: 'https://dribbble.com/yourusername', icon: `<circle cx="12" cy="12" r="10"/><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/>` },
+            ].map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center justify-between py-3 border-b transition-all duration-200 hover:opacity-70"
+                style="border-color: rgba(250,250,250,0.1); color: var(--color-bg);"
+              >
+                <span class="text-sm font-medium">{social.name}</span>
+                <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
