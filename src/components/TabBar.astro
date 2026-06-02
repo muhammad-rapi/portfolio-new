@@ -1,0 +1,92 @@
+---
+interface Props {
+  locale: 'en' | 'id';
+}
+const { locale } = Astro.props;
+const base = locale === 'id' ? '/id' : '';
+---
+
+<nav class="tab-bar" id="tab-bar">
+  <div class="tab-bar-inner">
+    <a href={`${base}/`} class="tab" data-section="home">
+      <i class="fa-solid fa-house tab-icon"></i>
+      <span class="tab-label">Home</span>
+    </a>
+    <a href={`${base}/#projects`} class="tab" data-section="projects">
+      <i class="fa-solid fa-code tab-icon"></i>
+      <span class="tab-label">Projects</span>
+    </a>
+    <a href={`${base}/#blog`} class="tab" data-section="blog">
+      <i class="fa-solid fa-pen-nib tab-icon"></i>
+      <span class="tab-label">Blog</span>
+    </a>
+    <a href={`${base}/#about`} class="tab" data-section="about">
+      <i class="fa-solid fa-user tab-icon"></i>
+      <span class="tab-label">About</span>
+    </a>
+    <a href={`${base}/#contact`} class="tab" data-section="contact">
+      <i class="fa-solid fa-paper-plane tab-icon"></i>
+      <span class="tab-label">Contact</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+.tab-bar {
+  position: fixed; bottom: 24px;
+  left: 50%; transform: translateX(-50%);
+  height: 60px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), var(--brut-shadow);
+  display: flex; align-items: stretch;
+  z-index: 100;
+  width: calc(100% - 48px);
+  max-width: 640px;
+  overflow: hidden;
+}
+.tab-bar-inner { width: 100%; display: flex; }
+.tab {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 5px; cursor: pointer;
+  border-right: 1px solid var(--border);
+  transition: background .12s;
+  padding: 0 8px;
+  text-decoration: none;
+  position: relative;
+}
+.tab:last-child { border-right: none; }
+.tab:hover { background: var(--bg-card); }
+.tab.active { background: var(--bg-card); border-top: 2px solid var(--text); margin-top: -1px; }
+.tab-icon { font-size: 15px; color: var(--text-muted); transition: color .12s; }
+.tab.active .tab-icon { color: var(--text); }
+.tab-label {
+  font-size: 8px; font-weight: 800;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-muted); transition: color .12s;
+}
+.tab.active .tab-label { color: var(--text); }
+</style>
+
+<script>
+const sections = ['home', 'projects', 'blog', 'about', 'contact'];
+const tabs = document.querySelectorAll<HTMLElement>('.tab');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id || 'home';
+      tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.section === id);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id) || document.body;
+  observer.observe(el);
+});
+</script>

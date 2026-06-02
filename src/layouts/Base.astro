@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import TopBar from '../components/TopBar.astro';
+import TabBar from '../components/TabBar.astro';
 import SEO from '../components/SEO.astro';
 
 interface Props {
@@ -9,62 +9,56 @@ interface Props {
   description?: string;
   image?: string;
   locale?: 'en' | 'id';
-  canonical?: string;
 }
 
 const {
-  title = 'Your Name',
-  description = 'Full-Stack Developer & UI Engineer',
-  image = '/og-image.svg',
+  title = 'Muhammad Rapi — Software Engineer',
+  description = 'Software Engineer based in Jakarta. Building reliable systems and clean interfaces.',
+  image = '/og-image.png',
   locale = 'en',
-  canonical,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={locale === 'id' ? 'id' : 'en'} data-theme="light">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <SEO title={title} description={description} image={image} locale={locale} />
+    <SEO {title} {description} {image} {locale} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Theme initialization (prevent flash) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <script is:inline>
       (function() {
-        const theme = localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light') document.documentElement.classList.add('light');
       })();
     </script>
   </head>
   <body>
-    <Navbar locale={locale} />
+    <TopBar locale={locale} />
     <main>
       <slot />
     </main>
-    <Footer locale={locale} />
+    <TabBar locale={locale} />
     <script>
-      // Intersection Observer for scroll reveal
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light');
+        localStorage.setItem('theme',
+          document.documentElement.classList.contains('light') ? 'light' : 'dark'
+        );
+      });
 
-      document.querySelectorAll('.reveal, .reveal-left').forEach((el) => observer.observe(el));
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('in-view');
+        }),
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
   </body>
 </html>
