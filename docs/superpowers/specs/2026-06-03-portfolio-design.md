@@ -20,16 +20,15 @@ Design direction: **minimalist dark-first, editorial, Motion-inspired + brutalis
 **Dark mode (default):**
 | Token | Value | Use |
 |---|---|---|
-| `--bg` | `#080808` | Page background |
-| `--bg-surface` | `#101010` | Raised surface (featured card bg) |
-| `--bg-raised` | `#161616` | Further elevated |
-| `--border` | `#1e1e1e` | Default dividers & card borders |
-| `--border-mid` | `#2a2a2a` | Mid-emphasis borders |
-| `--border-strong` | `#3a3a3a` | Hover state borders |
-| `--text` | `#f2f2f2` | Primary text |
-| `--text-sub` | `#888` | Secondary text |
-| `--text-muted` | `#444` | Labels, eyebrows, muted |
-| `--green-text` | `#4caf60` | Available status dot |
+| `--bg` | `#111112` | Page background — dark charcoal, slight cool undertone (not pure black) |
+| `--bg-surface` | `#18181a` | Raised surface (featured card bg) |
+| `--border` | `#242426` | Default dividers & card borders |
+| `--border-mid` | `#303033` | Mid-emphasis borders |
+| `--border-strong` | `#464649` | Hover state borders |
+| `--text` | `#eeeef0` | Primary text |
+| `--text-sub` | `#808085` | Secondary text |
+| `--text-muted` | `#44444a` | Labels, eyebrows, muted |
+| `--green-text` | `#3d9950` | Available status dot |
 
 **Light mode:**
 | Token | Value |
@@ -64,13 +63,18 @@ Design direction: **minimalist dark-first, editorial, Motion-inspired + brutalis
 | `--r-lg` | 12px | Featured project card |
 
 ### Typography — Poppins
+Minimum font weight is **600** across all text — no thin or light weights anywhere.
+
 | Role | Size | Weight | Letter-spacing | Line-height |
 |---|---|---|---|---|
-| Hero name | clamp(52px, 11vw, 76px) | 900 | -3px | 1.0 |
-| Section heading | 18px | 700 | -0.4px | 1.3 |
-| Tagline / body | 14–15px | 400 | -0.1px | 1.55–1.7 |
-| Labels / eyebrows | 9–11px | 600–700 | 3px | — |
-| Nav links | 11px | 500 | 0.3px | — |
+| Hero name | clamp(58px, 13vw, 88px) | 900 | -4px | 0.92 |
+| Featured project title | 20px | 800 | -0.5px | 1.3 |
+| Experience company | 15px | 800 | -0.3px | — |
+| Tagline / about / body | 16–17px | 600 | -0.1px | 1.55–1.72 |
+| Blog title | 16px | 700 | — | — |
+| Nav links | 12px | 600 | 0.3px | — |
+| Labels / eyebrows / chips | 9–10px | 700–800 | 3–4px | — |
+| Stack chips | 10px | 700 | 1.5px | — |
 
 ---
 
@@ -86,17 +90,19 @@ Design direction: **minimalist dark-first, editorial, Motion-inspired + brutalis
 ## 4. Components
 
 ### Navigation
-- Logo: `rapi.` — Poppins 900, letter-spacing -1px
-- Links: Work · About · Blog
-- Right: EN/ID segmented toggle + ◐ Theme toggle button
-- EN/ID: segmented control, active state = `background: var(--text)` (inverted)
+- Logo: `rapi©` — Poppins 900, letter-spacing -1.2px, superscript `©` in `--text-muted`
+- Links: Work · About · Blog — weight 600
+- Right: EN/ID segmented toggle + `◐` theme button
+- EN/ID: segmented control, active state = `background: var(--text); color: var(--bg)` (inverted)
+- Section headers: label + `flex: 1` horizontal rule + optional count — e.g. `SELECTED WORK ─────── 03`
 
 ### Hero
-- Eyebrow: `SOFTWARE ENGINEER` — 11px, weight 500, letter-spacing 3px, `--text-muted`
-- Name: `Muhammad` + `Rapi.` — 76px weight 900, `Rapi.` has 3px solid border-bottom (brutalism underline)
-- Tagline: 15px/1.55, `--text-sub`, max-width 420px
-- CTA row: primary button + ghost text button
-- Status line: green dot + "Available for opportunities" + stack summary
+- Eyebrow: `SOFTWARE ENGINEER` — 10px, weight 700, letter-spacing 4px, `--text-muted`, with extending horizontal rule `::after`
+- Name: `Muhammad` + `Rapi.` — 88px weight 900, letter-spacing -4px, `Rapi.` has `border-bottom: 4px solid var(--text)` (brutalism underline)
+- Tagline: 17px/1.55, weight 600, `--text-sub`, max-width 440px
+- CTA row: primary button + ghost button
+- Status line: green dot + "Available" text + separator + stack summary
+- **Grid lines** (`::before` pseudo-element) inside hero only — `40px` grid, masked with linear-gradient fade to bottom. Not on any other section.
 
 ### Buttons
 **Primary (brutalism):**
