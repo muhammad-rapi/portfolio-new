@@ -89,12 +89,22 @@ Minimum font weight is **600** across all text — no thin or light weights anyw
 
 ## 4. Components
 
-### Navigation
+### Top Bar (minimal)
 - Logo: `rapi©` — Poppins 900, letter-spacing -1.2px, superscript `©` in `--text-muted`
-- Links: Work · About · Blog — weight 600
-- Right: EN/ID segmented toggle + `◐` theme button
-- EN/ID: segmented control, active state = `background: var(--text); color: var(--bg)` (inverted)
-- Section headers: label + `flex: 1` horizontal rule + optional count — e.g. `SELECTED WORK ─────── 03`
+- Right: EN/ID segmented toggle + `◐` theme button only — no nav links here
+
+### Bottom Tab Bar (floating)
+- Position: `fixed`, `bottom: 24px`, centered horizontally, `max-width: 640px`, `width: calc(100% - 48px)`
+- Style: `border-radius: 12px`, `border: 1px solid var(--border-mid)`, `box-shadow` + brutalism offset shadow
+- Tabs: **Home · Projects · Blog · About · Contact**
+- Each tab: Font Awesome icon + label (9px/800, letter-spacing 1.5px uppercase)
+- Active state: `border-top: 2px solid var(--text)`, background `var(--bg-card)`, icon+label color `var(--text)`
+- Inactive: icon+label color `var(--text-muted)`
+
+### Section Cards
+- Each section wrapped in `.sec-card`: `border: 1px solid var(--border-mid)`, `border-radius: 8px`, `background: var(--bg-surface)`
+- `.card-header`: title 28px/900 + count label, with subtle grid lines `::before` (`rgba(255,255,255,0.014)`, `28px` grid), fade masked
+- `.card-body`: `padding: 20px 24px`
 
 ### Hero
 - Eyebrow: `SOFTWARE ENGINEER` — 10px, weight 700, letter-spacing 4px, `--text-muted`, with extending horizontal rule `::after`
@@ -139,15 +149,23 @@ Minimum font weight is **600** across all text — no thin or light weights anyw
 - Company: 14px/700 | Role: 11px `--text-sub` | Note: 11px/1.5 `--text-muted`
 
 ### Skill Chips
-- `border: 1px solid var(--border-mid)`, `border-radius: var(--r-xs)`
-- 9px/600, letter-spacing 1.5px, uppercase, `--text-sub`
+- `border: 1px solid var(--border-mid)`, `border-radius: 4px`
+- 10px/800, letter-spacing 1px, uppercase, `--text-sub`, background `var(--bg-card)`
+- Each chip includes **Devicon** icon (16px) left of label — loaded via `devicon` CDN (self-hosted in prod)
 - Hover: border `--border-strong`, color `--text`
 
 ### Blog Rows
-- Horizontal row: title left, date right
+- Horizontal row: title (15px/700) left, date (10px/700) right
 - `border-bottom: 1px solid var(--border)`
 - No cards — editorial list style
-- Hover: title color dims to `--text-sub`
+- Hover: `padding-left: 6px` slide-in effect
+
+### Contact Section
+- Social buttons row: Email · GitHub · LinkedIn — each with Font Awesome icon (`fa-envelope`, `fa-brands fa-github`, `fa-brands fa-linkedin`) + brutalism style
+- Divider: `OR SEND A MESSAGE` with extending horizontal rules
+- Email form: Name + Email (side by side) · Subject · Message (textarea 88px) · Send button with `fa-paper-plane`
+- Form inputs: `border: 1px solid var(--border-mid)`, focus → `var(--border-strong)`, `border-radius: 3px`, Poppins 600 13px
+- Form is cosmetic in static site — wire to Resend / Formspree on deploy
 
 ---
 
