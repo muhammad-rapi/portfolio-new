@@ -1,126 +1,196 @@
 ---
 interface Props {
   locale?: 'en' | 'id';
-  email?: string;
 }
+const { locale = 'en' } = Astro.props;
 
-const { locale = 'en', email = 'hello@yourname.dev' } = Astro.props;
-const t = await import(`../i18n/${locale}.json`);
-
-const socials = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com/yourusername',
-    label: 'github.com/yourusername',
+const t = {
+  en: {
+    email: 'Email',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+    orSend: 'OR SEND A MESSAGE',
+    namePh: 'Your name',
+    emailPh: 'Your email',
+    subjectPh: 'Subject',
+    messagePh: 'Your message',
+    send: 'Send Message',
   },
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/yourusername',
-    label: 'linkedin.com/in/yourusername',
+  id: {
+    email: 'Email',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+    orSend: 'ATAU KIRIM PESAN',
+    namePh: 'Nama Anda',
+    emailPh: 'Email Anda',
+    subjectPh: 'Subjek',
+    messagePh: 'Pesan Anda',
+    send: 'Kirim Pesan',
   },
-  {
-    name: 'X / Twitter',
-    url: 'https://x.com/yourusername',
-    label: 'x.com/yourusername',
-  },
-  {
-    name: 'Dribbble',
-    url: 'https://dribbble.com/yourusername',
-    label: 'dribbble.com/yourusername',
-  },
-];
+}[locale];
 ---
 
-<section id="contact" class="py-24 md:py-40" style="background-color: var(--color-ink);">
-  <div class="container-wide">
-
-    <!-- Top: section label -->
-    <div class="reveal mb-20">
-      <p class="font-mono text-xs tracking-widest" style="color: rgba(250,250,250,0.3);">
-        {`0${locale === 'en' ? '4' : '4'} / ${t.contact.label.toUpperCase()}`}
-      </p>
-    </div>
-
-    <!-- Headline -->
-    <div class="mb-20">
-      <h2
-        class="reveal font-display font-bold leading-none"
-        style="
-          font-size: clamp(3rem, 9vw, 7rem);
-          letter-spacing: -0.05em;
-          color: var(--color-bg);
-          line-height: 0.92;
-        "
-      >
-        {t.contact.headline}
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end">
-
-      <!-- Left: CTA -->
-      <div class="lg:col-span-5">
-        <p class="reveal text-base leading-relaxed mb-10" style="color: rgba(250,250,250,0.45);">
-          {t.contact.sub}
-        </p>
-
-        <div class="reveal">
-          <a
-            href={`mailto:${email}?subject=${locale === 'id' ? 'Hai, saya ingin bekerja sama' : 'Hi, let\'s work together'}`}
-            class="group inline-flex items-center gap-3 text-base font-medium transition-all duration-200"
-            style="color: var(--color-bg);"
-          >
-            <span class="relative">
-              {t.contact.email}
-              <span
-                class="absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
-                style="background: var(--color-bg); opacity: 0.4;"
-              ></span>
-            </span>
-            <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: Social links -->
-      <div class="lg:col-span-6 lg:col-start-7">
-        <p class="reveal font-mono text-xs mb-6 tracking-widest" style="color: rgba(250,250,250,0.25);">
-          {t.contact.social.toUpperCase()}
-        </p>
-        <div class="flex flex-col">
-          {socials.map((social, i) => (
-            <a
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="reveal group flex items-center justify-between py-4 transition-all duration-200 hover:pl-3"
-              style={`border-bottom: 1px solid rgba(250,250,250,0.08); transition-delay: ${i * 60}ms;`}
-            >
-              <div class="flex flex-col">
-                <span class="text-sm font-medium" style="color: var(--color-bg);">
-                  {social.name}
-                </span>
-                <span class="font-mono text-xs mt-0.5" style="color: rgba(250,250,250,0.35);">
-                  {social.label}
-                </span>
-              </div>
-              <svg
-                class="w-4 h-4 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                style="color: rgba(250,250,250,0.4);"
-              >
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-
+<div class="contact-wrap">
+  <div class="social-row">
+    <a href="mailto:hello@muhammadrapi.dev" class="social-btn">
+      <i class="fa-solid fa-envelope"></i>
+      <span>{t.email}</span>
+    </a>
+    <a href="https://github.com/muhammadrapi" target="_blank" rel="noopener" class="social-btn">
+      <i class="fa-brands fa-github"></i>
+      <span>{t.github}</span>
+    </a>
+    <a href="https://linkedin.com/in/muhammadrapi" target="_blank" rel="noopener" class="social-btn">
+      <i class="fa-brands fa-linkedin"></i>
+      <span>{t.linkedin}</span>
+    </a>
   </div>
-</section>
+
+  <div class="divider">
+    <span class="divider-rule"></span>
+    <span class="divider-text">{t.orSend}</span>
+    <span class="divider-rule"></span>
+  </div>
+
+  <form class="contact-form" onsubmit="return false;">
+    <div class="form-row">
+      <input type="text" class="form-input" placeholder={t.namePh} autocomplete="name" />
+      <input type="email" class="form-input" placeholder={t.emailPh} autocomplete="email" />
+    </div>
+    <input type="text" class="form-input" placeholder={t.subjectPh} />
+    <textarea class="form-input form-textarea" placeholder={t.messagePh} rows="4"></textarea>
+    <button type="submit" class="btn-send">
+      <i class="fa-solid fa-paper-plane"></i>
+      {t.send}
+    </button>
+  </form>
+</div>
+
+<style>
+  .contact-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .social-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border-mid);
+    border-radius: 4px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .social-btn:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .divider-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border-mid);
+  }
+
+  .divider-text {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .form-input {
+    border: 1px solid var(--border-mid);
+    border-radius: 3px;
+    padding: 10px 12px;
+    background: var(--bg-card);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  .form-input::placeholder {
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .form-input:focus {
+    border-color: var(--border-strong);
+  }
+
+  .form-textarea {
+    min-height: 88px;
+    resize: vertical;
+  }
+
+  .btn-send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    background: var(--text);
+    color: var(--bg);
+    border: var(--brut-border);
+    border-radius: 4px;
+    box-shadow: var(--brut-shadow);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  .btn-send:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--brut-fg);
+  }
+
+  .btn-send:active {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+  }
+
+  @media (max-width: 480px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
