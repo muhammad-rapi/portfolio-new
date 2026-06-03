@@ -16,7 +16,7 @@ const base = locale === 'id' ? '/id' : '';
       <i class="fa-solid fa-code tab-icon"></i>
       <span class="tab-label">Projects</span>
     </a>
-    <a href={`${base}/#blog`} class="tab" data-section="blog">
+    <a href={`${base}/#writing`} class="tab" data-section="writing">
       <i class="fa-solid fa-pen-nib tab-icon"></i>
       <span class="tab-label">Blog</span>
     </a>
@@ -71,22 +71,35 @@ const base = locale === 'id' ? '/id' : '';
 </style>
 
 <script>
-const sections = ['home', 'projects', 'blog', 'about', 'contact'];
 const tabs = document.querySelectorAll<HTMLElement>('.tab');
+// IDs that map to tabs — order matters (top to bottom)
+const sectionIds = ['projects', 'experience', 'stack', 'about', 'writing', 'contact'];
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id || 'home';
-      tabs.forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.section === id);
-      });
+function setActive(id: string) {
+  tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.section === id));
+}
+
+function onScroll() {
+  const scrollY = window.scrollY;
+  const windowH = window.innerHeight;
+
+  // If near top, activate home
+  if (scrollY < 120) {
+    setActive('home');
+    return;
+  }
+
+  // Find the last section whose top is above the middle of the viewport
+  let active = 'projects';
+  for (const id of sectionIds) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= windowH * 0.45) {
+      active = id;
     }
-  });
-}, { threshold: 0.4 });
+  }
+  setActive(active);
+}
 
-sections.forEach(id => {
-  const el = document.getElementById(id) || document.body;
-  observer.observe(el);
-});
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll(); // run on load
 </script>
