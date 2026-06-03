@@ -15,7 +15,9 @@ const { locale } = Astro.props;
         <a href="/" class:list={['lang-opt', { on: locale === 'en' }]}>EN</a>
         <a href="/id" class:list={['lang-opt', { on: locale === 'id' }]}>ID</a>
       </div>
-      <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">◐</button>
+      <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-circle-half-stroke theme-icon"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -55,11 +57,11 @@ const { locale } = Astro.props;
 }
 .lang-opt.on { background: var(--text); color: var(--bg); }
 .theme-btn {
-  font-family: 'Poppins', sans-serif;
-  font-size: 11px; font-weight: 700;
   background: none; border: 1px solid var(--border-mid);
-  border-radius: 3px; padding: 4px 10px;
+  border-radius: 3px; padding: 4px 8px;
   color: var(--text-sub); cursor: pointer; transition: all .12s;
+  display: flex; align-items: center; justify-content: center;
 }
 .theme-btn:hover { color: var(--text); border-color: var(--border-strong); }
+.theme-icon { font-size: 12px; }
 </style>
