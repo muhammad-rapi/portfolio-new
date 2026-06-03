@@ -1,17 +1,25 @@
 {
   "nav": {
+    "home": "Home",
     "about": "About",
     "work": "Work",
+    "projects": "Projects",
+    "blog": "Blog",
     "skills": "Skills",
     "contact": "Contact"
   },
   "hero": {
     "greeting": "Hello, I'm",
+    "eyebrow": "SOFTWARE ENGINEER",
     "role": "Full-Stack Developer & UI Engineer",
-    "tagline": "I craft fast, beautiful, and purposeful digital experiences that make an impact.",
+    "tagline": "Building reliable systems and clean interfaces.",
     "cta_work": "View My Work",
     "cta_cv": "Download CV",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "viewWork": "View Work",
+    "readBlog": "Read Blog",
+    "available": "Available for work",
+    "stack": "TypeScript · Go · React"
   },
   "about": {
     "label": "About Me",
@@ -25,11 +33,23 @@
       "clients": "Happy Clients"
     }
   },
+  "sections": {
+    "selectedWork": "Selected Work",
+    "experience": "Experience",
+    "stack": "Stack",
+    "about": "About",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
   "projects": {
     "label": "Selected Work",
+    "featured": "FEATURED",
     "view_all": "View All Projects",
+    "viewAll": "View all on GitHub",
     "view_case": "View Case Study",
     "view_live": "Live Site",
+    "liveDemo": "Live Demo",
+    "sourceCode": "Source Code",
     "year": "Year"
   },
   "skills": {
@@ -47,11 +67,18 @@
     "headline": "Have a project in mind?",
     "sub": "I'm open to freelance projects, collaborations, and full-time opportunities. Let's build something great together.",
     "email": "Send Email",
-    "social": "Find me online"
+    "social": "Find me online",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "subjectPlaceholder": "Subject",
+    "messagePlaceholder": "Your message",
+    "send": "Send Message",
+    "orSendMessage": "OR SEND A MESSAGE"
   },
   "footer": {
-    "copyright": "Made with precision.",
-    "built": "Built with Astro & Tina CMS"
+    "copyright": "© 2024 Muhammad Rapi",
+    "built": "Built with Astro · Tailwind · TinaCMS",
+    "madeWith": "Built with Astro · Tailwind · TinaCMS"
   },
   "common": {
     "loading": "Loading...",

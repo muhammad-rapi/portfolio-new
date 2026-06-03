@@ -1,17 +1,25 @@
 {
   "nav": {
+    "home": "Beranda",
     "about": "Tentang",
     "work": "Proyek",
+    "projects": "Proyek",
+    "blog": "Blog",
     "skills": "Keahlian",
     "contact": "Kontak"
   },
   "hero": {
     "greeting": "Halo, saya",
+    "eyebrow": "SOFTWARE ENGINEER",
     "role": "Full-Stack Developer & UI Engineer",
-    "tagline": "Saya menciptakan pengalaman digital yang cepat, indah, dan penuh makna.",
+    "tagline": "Membangun sistem yang andal dan antarmuka yang bersih.",
     "cta_work": "Lihat Proyek",
     "cta_cv": "Unduh CV",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "viewWork": "Lihat Proyek",
+    "readBlog": "Baca Blog",
+    "available": "Tersedia untuk pekerjaan",
+    "stack": "TypeScript · Go · React"
   },
   "about": {
     "label": "Tentang Saya",
@@ -25,11 +33,23 @@
       "clients": "Klien Puas"
     }
   },
+  "sections": {
+    "selectedWork": "Karya Pilihan",
+    "experience": "Pengalaman",
+    "stack": "Teknologi",
+    "about": "Tentang",
+    "writing": "Tulisan",
+    "contact": "Kontak"
+  },
   "projects": {
     "label": "Proyek Pilihan",
+    "featured": "UNGGULAN",
     "view_all": "Lihat Semua Proyek",
+    "viewAll": "Lihat semua di GitHub",
     "view_case": "Lihat Case Study",
     "view_live": "Lihat Situs",
+    "liveDemo": "Demo Langsung",
+    "sourceCode": "Kode Sumber",
     "year": "Tahun"
   },
   "skills": {
@@ -47,11 +67,18 @@
     "headline": "Punya proyek yang ingin dibahas?",
     "sub": "Saya terbuka untuk proyek freelance, kolaborasi, dan kesempatan kerja penuh waktu. Mari kita bangun sesuatu yang hebat bersama.",
     "email": "Kirim Email",
-    "social": "Temukan saya online"
+    "social": "Temukan saya online",
+    "namePlaceholder": "Nama Anda",
+    "emailPlaceholder": "Email Anda",
+    "subjectPlaceholder": "Subjek",
+    "messagePlaceholder": "Pesan Anda",
+    "send": "Kirim Pesan",
+    "orSendMessage": "ATAU KIRIM PESAN"
   },
   "footer": {
-    "copyright": "Dibuat dengan presisi.",
-    "built": "Dibangun dengan Astro & Tina CMS"
+    "copyright": "© 2024 Muhammad Rapi",
+    "built": "Dibangun dengan Astro & Tina CMS",
+    "madeWith": "Dibuat dengan Astro · Tailwind · TinaCMS"
   },
   "common": {
     "loading": "Memuat...",
