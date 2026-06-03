@@ -1,4 +1,6 @@
 ---
+import skillsData from '../content/skills.json';
+
 interface Props {
   locale?: 'en' | 'id';
 }
@@ -6,59 +8,144 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const t = await import(`../i18n/${locale}.json`);
 
-const skills = [
-  { name: 'React / Next.js', category: 'Frontend' },
-  { name: 'TypeScript', category: 'Frontend' },
-  { name: 'Astro', category: 'Frontend' },
-  { name: 'Tailwind CSS', category: 'Frontend' },
-  { name: 'Node.js', category: 'Backend' },
-  { name: 'PostgreSQL', category: 'Backend' },
-  { name: 'GraphQL', category: 'Backend' },
-  { name: 'Docker', category: 'Backend' },
-  { name: 'Git / GitHub', category: 'Tools' },
-  { name: 'Figma', category: 'Design' },
-  { name: 'Vercel / Netlify', category: 'Tools' },
-  { name: 'UI/UX Design', category: 'Design' },
-];
+const DEVICON_MAP: Record<string, string> = {
+  'react': 'devicon-react-original',
+  'next.js': 'devicon-nextjs-plain',
+  'astro': 'devicon-astro-plain',
+  'vue.js': 'devicon-vuejs-plain',
+  'typescript': 'devicon-typescript-plain',
+  'tailwind css': 'devicon-tailwindcss-plain',
+  'framer motion': 'devicon-framermotion-plain',
+  'node.js': 'devicon-nodejs-plain',
+  'python': 'devicon-python-plain',
+  'postgresql': 'devicon-postgresql-plain',
+  'mongodb': 'devicon-mongodb-plain',
+  'redis': 'devicon-redis-plain',
+  'graphql': 'devicon-graphql-plain',
+  'docker': 'devicon-docker-plain',
+  'git': 'devicon-git-plain',
+  'github': 'devicon-github-plain',
+  'vercel': 'devicon-vercel-plain',
+  'netlify': 'devicon-netlify-plain',
+  'figma': 'devicon-figma-plain',
+  'linux': 'devicon-linux-plain',
+  'aws': 'devicon-amazonwebservices-plain-wordmark',
+  'javascript': 'devicon-javascript-plain',
+  'go': 'devicon-go-plain',
+  'rust': 'devicon-rust-plain',
+};
+
+function deviconClass(name: string): string | null {
+  return DEVICON_MAP[name.toLowerCase()] ?? null;
+}
+
+const categories = skillsData.categories;
 ---
 
-<section id="skills" class="py-24 md:py-32" style="background-color: var(--color-surface);">
-  <div class="container-wide">
-    <!-- Header -->
-    <div class="reveal flex items-baseline gap-6 mb-16">
-      <p class="font-mono text-xs tracking-widest" style="color: var(--color-ink-muted);">
-        03 / {t.skills.label.toUpperCase()}
-      </p>
-      <h2
-        class="font-display font-bold"
-        style="font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.03em; color: var(--color-ink);"
-      >
-        Stack
-      </h2>
-    </div>
+<section id="skills" class="skills-section">
+  <div class="section-header">
+    <p class="section-index">03 / {t.skills.label.toUpperCase()}</p>
+    <h2 class="section-title">Stack</h2>
+  </div>
 
-    <!-- Skills grid — intentional 3-col asymmetric -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-6">
-      {skills.map((skill, i) => (
-        <div
-          class="reveal group flex items-center gap-3 py-2 border-b transition-all duration-200"
-          style={`
-            border-color: var(--color-ink-faint);
-            transition-delay: ${i * 50}ms;
-          `}
-        >
-          <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-200 group-hover:scale-150" style="background: var(--color-ink-faint);"></span>
-          <span
-            class="text-sm transition-opacity duration-200 group-hover:opacity-60"
-            style="color: var(--color-ink);"
-          >
-            {skill.name}
-          </span>
-          <span class="ml-auto font-mono text-xs flex-shrink-0" style="color: var(--color-ink-faint);">
-            {skill.category}
-          </span>
+  <div class="skills-wrap">
+    {categories.map(category => (
+      <div class="skill-group">
+        <span class="category-label">{category.name.toUpperCase()}</span>
+        <div class="chips">
+          {category.skills.map(skillName => {
+            const icon = deviconClass(skillName);
+            return (
+              <span class="chip">
+                {icon && <i class={`${icon} colored`}></i>}
+                <span class="chip-label">{skillName}</span>
+              </span>
+            );
+          })}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
 </section>
+
+<style>
+  .skills-section {
+    padding: 6rem 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-index {
+    font-family: monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .skills-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .category-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border-mid);
+    border-radius: 4px;
+    background: var(--bg-card);
+    padding: 6px 12px;
+    transition: border-color 0.15s, color 0.15s;
+    cursor: default;
+  }
+
+  .chip:hover {
+    border-color: var(--border-strong);
+  }
+
+  .chip i {
+    font-size: 16px;
+  }
+
+  .chip-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    transition: color 0.15s;
+  }
+
+  .chip:hover .chip-label {
+    color: var(--text);
+  }
+</style>
