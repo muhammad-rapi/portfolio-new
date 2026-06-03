@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  locale?: 'en' | 'id';
+}
+
+const { locale = 'en' } = Astro.props;
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.locale === locale
+);
+
+const posts = allPosts.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+{posts.length === 0 ? (
+  <p class="empty">No posts yet.</p>
+) : (
+  <div class="writing-list">
+    {posts.map((post, i) => (
+      <a href={`/blog/${post.slug}`} class={`post-row${i === posts.length - 1 ? ' last' : ''}`}>
+        <span class="post-title">{post.data.title}</span>
+        <span class="post-date">{formatDate(post.data.date)}</span>
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+  .writing-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.15s;
+  }
+
+  .post-row.last {
+    border-bottom: none;
+  }
+
+  .post-row:hover {
+    padding-left: 6px;
+  }
+
+  .post-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+
+  .post-row:hover .post-title {
+    color: var(--text);
+  }
+
+  .post-date {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .empty {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+</style>
