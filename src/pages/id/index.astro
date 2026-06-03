@@ -1,26 +1,66 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
-import TechStack from '../../components/TechStack.astro';
-import About from '../../components/About.astro';
+import SectionCard from '../../components/SectionCard.astro';
 import ProjectsGrid from '../../components/ProjectsGrid.astro';
-import Skills from '../../components/Skills.astro';
 import Timeline from '../../components/Timeline.astro';
+import Skills from '../../components/Skills.astro';
+import About from '../../components/About.astro';
+import WritingList from '../../components/WritingList.astro';
 import Contact from '../../components/Contact.astro';
-
-const locale = 'id';
 ---
 
-<Base
-  locale={locale}
-  title="Nama Anda — Full-Stack Developer & UI Engineer"
-  description="Full-Stack Developer & UI Engineer. Membangun pengalaman digital yang cepat, indah, dan penuh makna."
->
-  <Hero locale={locale} name="Nama Anda" />
-  <TechStack locale={locale} />
-  <About locale={locale} name="Nama Anda" />
-  <ProjectsGrid locale={locale} limit={4} />
-  <Skills locale={locale} />
-  <Timeline locale={locale} />
-  <Contact locale={locale} />
+<Base locale="id">
+  <Hero locale="id" />
+  <div class="wrap sections">
+    <SectionCard title="Karya Pilihan" count="04" id="projects">
+      <ProjectsGrid locale="id" />
+    </SectionCard>
+    <SectionCard title="Pengalaman" id="experience">
+      <Timeline locale="id" />
+    </SectionCard>
+    <SectionCard title="Teknologi" id="stack">
+      <Skills locale="id" />
+    </SectionCard>
+    <SectionCard title="Tentang" id="about">
+      <About locale="id" />
+    </SectionCard>
+    <SectionCard title="Tulisan" id="writing">
+      <WritingList locale="id" />
+    </SectionCard>
+    <SectionCard title="Kontak" id="contact">
+      <Contact locale="id" />
+    </SectionCard>
+    <footer class="site-footer">
+      <span>© 2024 Muhammad Rapi</span>
+      <span class="footer-stack">Dibuat dengan Astro · Tailwind · TinaCMS</span>
+    </footer>
+  </div>
 </Base>
+
+<style>
+  .sections {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .site-footer {
+    padding: 32px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-stack {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+</style>
