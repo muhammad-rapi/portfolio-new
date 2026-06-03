@@ -1,0 +1,65 @@
+---
+interface Props {
+  locale: 'en' | 'id';
+}
+const { locale } = Astro.props;
+---
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href={locale === 'id' ? '/id' : '/'} class="logo">
+      rafi<sup>©</sup>
+    </a>
+    <div class="top-right">
+      <div class="lang-seg">
+        <a href="/" class:list={['lang-opt', { on: locale === 'en' }]}>EN</a>
+        <a href="/id" class:list={['lang-opt', { on: locale === 'id' }]}>ID</a>
+      </div>
+      <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</header>
+
+<style>
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner {
+  max-width: 680px; margin: 0 auto;
+  padding: 0 24px; height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-size: 18px; font-weight: 900;
+  letter-spacing: -1.2px; color: var(--text);
+  text-decoration: none;
+}
+.logo sup {
+  font-size: 9px; font-weight: 700;
+  color: var(--text-muted); vertical-align: top; margin-top: 5px;
+}
+.top-right { display: flex; gap: 10px; align-items: center; }
+.lang-seg {
+  display: flex;
+  border: 1px solid var(--border-mid);
+  border-radius: 3px; overflow: hidden;
+}
+.lang-opt {
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 1.5px; padding: 4px 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all .12s;
+}
+.lang-opt.on { background: var(--text); color: var(--bg); }
+.theme-btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 700;
+  background: none; border: 1px solid var(--border-mid);
+  border-radius: 3px; padding: 4px 10px;
+  color: var(--text-sub); cursor: pointer; transition: all .12s;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--border-strong); }
+</style>

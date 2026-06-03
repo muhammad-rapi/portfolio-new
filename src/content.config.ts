@@ -49,9 +49,20 @@ const experienceCollection = defineCollection({
   })),
 });
 
+const blogCollection = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.string(),
+    locale: z.enum(['en', 'id']).default('en'),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
   about: aboutCollection,
   skills: skillsCollection,
   experience: experienceCollection,
+  blog: blogCollection,
 };

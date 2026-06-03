@@ -1,60 +1,227 @@
 ---
 import { getCollection } from 'astro:content';
-import ProjectCard from './ProjectCard.astro';
 
 interface Props {
   locale?: 'en' | 'id';
-  limit?: number;
 }
-
-const { locale = 'en', limit = 6 } = Astro.props;
-const t = await import(`../i18n/${locale}.json`);
-
-function getSlug(id: string): string {
-  return id.replace(/en$/, '').replace(/id$/, '');
-}
+const { locale = 'en' } = Astro.props;
 
 const allProjects = await getCollection('projects');
-const filtered = allProjects
+const projects = allProjects
   .filter(p => locale === 'en' ? p.id.endsWith('en') : p.id.endsWith('id'))
-  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
-  .slice(0, limit);
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const featured = projects.find(p => p.data.featured);
+const mini = projects.filter(p => !p.data.featured);
+
+function desc(project: typeof projects[0]): string {
+  const d = project.data.description;
+  if (typeof d === 'string') return d;
+  return (d as Record<string, string>)?.[locale] ?? (d as Record<string, string>)?.en ?? '';
+}
 ---
 
-<section id="work" class="py-24 md:py-32" style="background-color: var(--color-surface);">
-  <div class="container-wide">
-    <!-- Header -->
-    <div class="flex items-end justify-between mb-14">
-      <div>
-        <p class="reveal font-mono text-xs mb-3 tracking-widest" style="color: var(--color-ink-muted);">
-          {t.projects.label}
-        </p>
-        <h2
-          class="reveal font-display font-bold"
-          style="font-size: clamp(1.5rem, 3.5vw, 2.25rem); letter-spacing: -0.03em; color: var(--color-ink);"
-        >
-          Selected Work
-        </h2>
-      </div>
-    </div>
-
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
-      {filtered.map((project, i) => (
-        <div class="reveal" style={`transition-delay: ${i * 80}ms;`}>
-          <ProjectCard
-            title={project.data.title}
-            description={project.data.description}
-            year={project.data.year}
-            tags={project.data.tags}
-            slug={getSlug(project.id)}
-            image={project.data.image}
-            liveUrl={project.data.liveUrl}
-            repoUrl={project.data.repoUrl}
-            locale={locale}
-          />
-        </div>
+{featured && (
+  <a href={featured.data.liveUrl ?? featured.data.repoUrl ?? '#'} class="featured-card" target="_blank" rel="noopener">
+    <span class="badge">FEATURED</span>
+    <h3 class="featured-title">{featured.data.title}</h3>
+    <p class="featured-desc">{desc(featured)}</p>
+    <div class="stack-row">
+      {(featured.data.tags ?? []).map((t: string) => (
+        <span class="stack-chip">{t}</span>
       ))}
     </div>
-  </div>
-</section>
+    <div class="links-row">
+      {featured.data.liveUrl && <span class="link-chip">Live Demo ↗</span>}
+      {featured.data.repoUrl && <span class="link-chip">Source Code ↗</span>}
+    </div>
+  </a>
+)}
+
+<div class="mini-grid">
+  {mini.map(p => (
+    <a href={p.data.liveUrl ?? p.data.repoUrl ?? '#'} class="mini-card" target="_blank" rel="noopener">
+      <h4 class="mini-title">{p.data.title}</h4>
+      <p class="mini-desc">{desc(p)}</p>
+      <div class="mini-stack">
+        {(p.data.tags ?? []).slice(0, 3).map((t: string) => (
+          <span class="mini-chip">{t}</span>
+        ))}
+      </div>
+    </a>
+  ))}
+  <a href="https://github.com/muhammad-rapi" class="mini-card github-card" target="_blank" rel="noopener">
+    <span class="github-icon"><i class="fa-brands fa-github"></i></span>
+    <span class="github-label">View all on GitHub</span>
+  </a>
+</div>
+
+<style>
+  .featured-card {
+    display: block;
+    border: 1.5px solid var(--brut-fg);
+    border-radius: 12px;
+    background: var(--bg-surface);
+    box-shadow: 3px 3px 0 var(--brut-fg);
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-bottom: 12px;
+  }
+
+  .featured-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--brut-fg);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .featured-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .featured-desc {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-sub);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .stack-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .stack-chip {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+
+  .links-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .link-chip {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-sub);
+    border: 1px solid var(--border-mid);
+    border-radius: 4px;
+    padding: 4px 10px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .featured-card:hover .link-chip {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mini-card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .mini-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-surface);
+  }
+
+  .mini-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .mini-desc {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .mini-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .mini-chip {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+
+  .github-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0.5;
+    text-align: center;
+  }
+
+  .github-card:hover {
+    opacity: 0.8;
+  }
+
+  .github-icon {
+    font-size: 20px;
+    color: var(--text-sub);
+  }
+
+  .github-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-sub);
+  }
+
+  @media (max-width: 480px) {
+    .mini-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

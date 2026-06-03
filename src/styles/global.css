@@ -1,185 +1,90 @@
 @import "tailwindcss";
 
+/* ── FONTS ── */
+/* In prod, self-host these. For now CDN is fine. */
+
 @theme {
-  /* Softer black & white palette */
-  --color-bg: #F7F6F3;         /* Warm off-white */
-  --color-surface: #FFFFFF;
-  --color-ink: #1C1C1C;          /* Soft near-black */
-  --color-ink-muted: #777777;    /* Medium gray */
-  --color-ink-faint: #E4E4E4;    /* Light gray border */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --ease-smooth: cubic-bezier(0.25, 0, 0, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --font-sans: 'Poppins', sans-serif;
 }
 
-/* Base */
+/* ── DESIGN TOKENS ── */
+:root {
+  /* Dark (default) */
+  --bg:            #111112;
+  --bg-surface:    #18181a;
+  --bg-card:       #1c1c1f;
+  --border:        #242426;
+  --border-mid:    #303033;
+  --border-strong: #464649;
+  --text:          #eeeef0;
+  --text-sub:      #808085;
+  --text-muted:    #44444a;
+  --brut-fg:       #eeeef0;
+  --brut-shadow:   3px 3px 0px var(--brut-fg);
+  --brut-border:   1.5px solid var(--brut-fg);
+  --green:         #3d9950;
+  --grid-color:    rgba(255,255,255,0.014);
+  --grid-size:     28px;
+}
+
+.light {
+  --bg:            #f0ede6;
+  --bg-surface:    #e8e5de;
+  --bg-card:       #e2dfd8;
+  --border:        #d4d0c9;
+  --border-mid:    #bbb8b0;
+  --border-strong: #8e8b83;
+  --text:          #0e0e0e;
+  --text-sub:      #6a6a6a;
+  --text-muted:    #b0ada6;
+  --brut-fg:       #0e0e0e;
+  --green:         #1e7a32;
+  --grid-color:    rgba(0,0,0,0.025);
+}
+
+/* ── BASE ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--color-bg);
-  color: var(--color-ink);
-  line-height: 1.65;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
   overflow-x: hidden;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background .25s, color .25s;
+  min-height: 100vh;
 }
 
-::selection {
-  background-color: var(--color-ink);
-  color: var(--color-bg);
-}
-
-/* Scrollbar */
+::selection { background: var(--text); color: var(--bg); }
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-ink-faint); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--border-mid); }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+/* ── SCROLL REVEAL (Motion One wires these) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .55s ease, transform .55s ease;
 }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
 
-/* Focus */
+/* ── FOCUS ── */
 :focus-visible {
-  outline: 1.5px solid var(--color-ink);
+  outline: 1.5px solid var(--text);
   outline-offset: 3px;
   border-radius: 3px;
 }
 
-/* =====================
-   ANIMATIONS
-   ===================== */
-
-/* Fade up — primary entrance */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Fade in — secondary */
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Slide from left */
-@keyframes slide-left {
-  from { opacity: 0; transform: translateX(-20px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-/* Line grow */
-@keyframes line-grow {
-  from { transform: scaleX(0); transform-origin: left; }
-  to   { transform: scaleX(1); transform-origin: left; }
-}
-
-/* Float */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-6px); }
-}
-
-/* Marquee */
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-fade-up  { animation: fade-up  0.6s var(--ease-smooth) both; }
-.animate-fade-in  { animation: fade-in  0.4s var(--ease-smooth) both; }
-.animate-slide-left { animation: slide-left 0.5s var(--ease-smooth) both; }
-.animate-float    { animation: float 4s ease-in-out infinite; }
-
-/* Stagger delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-
-/* Scroll reveal — fade + slight rise */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.65s var(--ease-smooth),
-    transform 0.65s var(--ease-smooth);
-}
-.reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Reveal from left */
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-16px);
-  transition:
-    opacity 0.6s var(--ease-smooth),
-    transform 0.6s var(--ease-smooth);
-}
-.reveal-left.in-view {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Hover: smooth scale */
-.hover-scale {
-  transition: transform 0.3s var(--ease-spring);
-}
-.hover-scale:hover {
-  transform: scale(1.02);
-}
-
-/* Divider line animation */
-.reveal-line {
-  display: inline-block;
-  height: 1px;
-  background: var(--color-ink-faint);
-  transition: width 0.8s var(--ease-smooth);
-}
-.reveal-line.in-view {
-  width: 48px;
-}
-
-/* =====================
-   LAYOUT UTILS
-   ===================== */
-.container-wide {
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-.container-narrow {
+/* ── LAYOUT ── */
+.wrap {
   max-width: 680px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  margin: 0 auto;
+  padding: 0 24px;
+  padding-bottom: 104px; /* space for floating tab bar */
 }
 
-/* Section padding */
-.section { padding-top: 100px; padding-bottom: 100px; }
-
-/* Horizontal rule with animation */
-.divider {
-  display: block;
-  height: 1px;
-  background: var(--color-ink-faint);
-  width: 100%;
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .sec-card { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

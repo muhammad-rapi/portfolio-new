@@ -10,8 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "tinacms": "tinacms dev --noTelemetry",
-    "tinacms:build": "tinacms build --noTelemetry",
+    "tinacms": "tinacms dev --noTelemetry --datalayer-port 9001",
     "tinacms:build": "tinacms build --noTelemetry"
   },
   "dependencies": {
@@ -22,6 +21,7 @@
     "@tinacms/cli": "^2.2.1",
     "astro": "^6.1.2",
     "lucide-static": "^1.7.0",
+    "motion": "^12.40.0",
     "tailwindcss": "^4.2.2",
     "tinacms": "^3.7.1",
     "vite": "^7"

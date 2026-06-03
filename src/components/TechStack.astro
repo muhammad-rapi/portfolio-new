@@ -4,35 +4,77 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 
-// Tech stack with SVG icons
+// Clean SVG tech stack icons — proper inline SVGs with currentColor
 const techs = [
-  { name: 'React', color: '#61DAFB', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(120 12 12)"/></svg>` },
-  { name: 'TypeScript', color: '#3178C6', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M8 15.5c1.2 1.8 3.2 2.5 5 2 1.3-.4 2-1.5 2-2.5 0-1.5-1.5-2.5-3.5-3.5l-1-1c-3-1.5-5-3-5-6 0-3 2.5-5.5 6-5.5 2.8 0 4.5 1.2 5.5 4.5" fill="none" stroke="white" stroke-width="1.5"/><path d="M18 10l-2 1 2 1" fill="none" stroke="white" stroke-width="1.5"/></svg>` },
-  { name: 'Next.js', color: '#ffffff', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><path d="M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>` },
-  { name: 'Astro', color: '#FF5D01', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3"/></svg>` },
-  { name: 'Node.js', color: '#339933', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2v10l8 5-8 5v10l-8-5v-10l8-5-8-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v20M4 7l8 5 8-5M4 17l8 5 8-5" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>` },
-  { name: 'Tailwind', color: '#06B6D4', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm-6 8c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3 1.34-3 3zm12 0c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/></svg>` },
-  { name: 'PostgreSQL', color: '#336791', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="6" rx="8" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 6v6c0 1.93 3.58 3.5 8 3.5s8-1.57 8-3.5V6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 12v6c0 1.93 3.58 3.5 8 3.5s8-1.57 8-3.5v-6" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>` },
-  { name: 'Docker', color: '#2496ED', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="10" y="3" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="17" y="10" width="4" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="10" y="17" width="4" height="4" rx="1"/><rect x="17" y="17" width="4" height="4" rx="1"/></svg>` },
-  { name: 'Git', color: '#F05032', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.62 11.11l-8.73-8.73a1.3 1.3 0 0 0-1.84 0l-1.81 1.81 2.3 2.3a1.55 1.55 0 0 1 1.96 1.97l2.22 2.22a1.55 1.55 0 1 1-.93.9l-2.07-2.07v5.45a1.55 1.55 0 1 1-1.28-.01V12.4L8.5 16.86a1.3 1.3 0 0 0 0 1.84l8.73 8.73a1.3 1.3 0 0 0 1.84 0l8.68-8.68a1.3 1.3 0 0 0 0-1.84l-.13-.13z"/></svg>` },
-  { name: 'Figma', color: '#F24E1E', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="8" height="8" rx="1.5"/><rect x="14" y="2" width="8" height="8" rx="1.5"/><rect x="2" y="14" width="8" height="8" rx="1.5"/><rect x="14" y="14" width="8" height="8" rx="1.5"/></svg>` },
-  { name: 'Vercel', color: '#ffffff', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 2 22 22 22"/></svg>` },
-  { name: 'GraphQL', color: '#E10098', svg: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v5M12 17v5M2 7l4.5 3M17.5 17l4.5-3M2 17l4.5-3M17.5 7l4.5 3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>` },
+  {
+    name: 'React',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>`,
+  },
+  {
+    name: 'TypeScript',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 10.5v1.5M9 12h2a1 1 0 0 1 1 1v1.5c0 .5-.5 1-1.5 1H10v2h-1v-5h3z" fill="currentColor"/></svg>`,
+  },
+  {
+    name: 'Next.js',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 22 20 2 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="15" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="18" x2="16" y2="18" stroke="currentColor" stroke-width="1.5"/></svg>`,
+  },
+  {
+    name: 'Astro',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z"/><path d="M12 22V12M12 12L3 7M12 12l9-5"/></svg>`,
+  },
+  {
+    name: 'Node.js',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.998 2C6.891 2 4.454 4.817 4.454 6.402v4.16c0 1.157.63 1.814 1.545 1.814 1.184 0 1.09-.691 1.09-1.813V8.563c0-1.15.36-2 2-2h2.182c1.64 0 2 .85 2 2v7c0 1.15-.36 2-2 2h-1.454c-1.64 0-2-.85-2-2v-1.09c0-1.19.454-1.91 1.91-1.91h1.636c.64 0 1 .32 1 .82 0 .09 0 .18-.09.32h2.09c.27-2.63-1.06-4.09-3.5-4.09z"/><path d="M11.998 22c5.107 0 7.544-2.817 7.544-4.402v-4.16c0-1.157-.63-1.814-1.545-1.814-1.184 0-1.09.691-1.09 1.813v4.063c0 1.15-.36 2-2 2h-2.182c-1.64 0-2-.85-2-2v-7c0-1.15.36-2 2-2h1.454c1.64 0 2 .85 2 2v1.09c0 1.19-.454 1.91-1.91 1.91h-1.636c-.64 0-1-.32-1-.82 0-.09 0-.18.09-.32H8.363c-.27 2.63 1.06 4.09 3.5 4.09z"/></svg>`,
+  },
+  {
+    name: 'Tailwind CSS',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg>`,
+  },
+  {
+    name: 'PostgreSQL',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.15 3.55a.5.5 0 0 0-.3-.1h-.08a.5.5 0 0 0-.27.08l-.04.04-.02.02-.02.02c-.71.71-1.2 1.39-1.58 2.07-.62 1.12-1.1 2.37-1.36 3.83a.5.5 0 0 0 .27.56l2.16.9.9.18a.5.5 0 0 0 .55-.27c.34-.93.77-1.74 1.27-2.47.37-.53.77-1.02 1.19-1.46l.02-.02.03-.03.04-.04.02-.02.02-.02a.5.5 0 0 0 .1-.3.5.5 0 0 0-.05-.24.5.5 0 0 0-.19-.17zM4.86 6.71c-1.21-.13-2.5.28-3.41 1.1a.5.5 0 0 0-.13.56l.75 1.6a.5.5 0 0 0 .56.27c.56-.24 1.19-.3 1.82-.15l.2.04a.5.5 0 0 0 .55-.27l.75-1.6a.5.5 0 0 0-.1-.57 4.3 4.3 0 0 0-1-.98zm15.29-.2c-.34-.8-.88-1.5-1.56-2.01a.5.5 0 0 0-.55.1l-.03.04a.5.5 0 0 0-.13.33.5.5 0 0 0 .07.28l.75 1.6a.5.5 0 0 0 .55.27l.2-.04c.63-.15 1.26-.09 1.82.15l.2.04a.5.5 0 0 0 .55-.27l.75-1.6a.5.5 0 0 0-.27-.56 5.05 5.05 0 0 0-2.05-.33zm-10.4-1.1a.5.5 0 0 0-.55-.1c-.88.48-1.53 1.14-2.01 2.01a.5.5 0 0 0-.13.56l.75 1.6a.5.5 0 0 0 .55.27l.2-.04c.63-.15 1.26-.09 1.82.15l.2.04a.5.5 0 0 0 .55-.27l.75-1.6a.5.5 0 0 0-.27-.56c-.47-.21-1-.33-1.55-.4z"/></svg>`,
+  },
+  {
+    name: 'Docker',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 6h3v3h-3V6zm-1 4h3v3h-3v-3zm4-4h3v3h-3V6zm-1 4h3v3h-3v-3zm4-4h3v3h-3V6zM8 18h3v3H8v-3zm-1 0H5v-3l-.5-.5v4l.5.5H7zm1-4h3v3H8v-3zm1-4h3v3H9V6z"/></svg>`,
+  },
+  {
+    name: 'Git',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>`,
+  },
+  {
+    name: 'Figma',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 24c2.208 0 4-1.792 4-4v-4H8c-2.208 0-4 1.792-4 4s1.792 4 4 4z"/><path d="M4 12c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z"/><path d="M4 4c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z"/><path d="M12 0h4c2.208 0 4 1.792 4 4s-1.792 4-4 4h-4V0z"/><path d="M20 12c0 2.208-1.792 4-4 4s-4-1.792-4-4 1.792-4 4-4 4 1.792 4 4z"/></svg>`,
+  },
+  {
+    name: 'Vercel',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 22 22 2 22"/></svg>`,
+  },
+  {
+    name: 'GraphQL',
+    svg: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M12 8.5v3.3l4.33 7"/><path d="M12 11.8L7.67 18.5"/><path d="M7.67 5.5L12 8.5M16.33 5.5L12 8.5"/></svg>`,
+  },
 ];
 
 // Duplicate for seamless loop
 const doubled = [...techs, ...techs];
 ---
 
-<div class="py-8 overflow-hidden" style="border-top: 1px solid var(--color-ink-faint); border-bottom: 1px solid var(--color-ink-faint);">
-  <div class="marquee-track flex items-center gap-0" style="width: max-content;">
+<div class="py-5 overflow-hidden" style="border-top: 1px solid var(--color-ink-faint); border-bottom: 1px solid var(--color-ink-faint);">
+  <div class="marquee-track flex items-center" style="width: max-content;">
     {doubled.map((tech, i) => (
       <div
-        class="flex items-center gap-2.5 px-6 py-2 rounded-full mx-1 hover-scale"
+        class="flex items-center gap-2 px-5 py-1.5 rounded-full mx-1 transition-all duration-200 cursor-default"
         style="background: var(--color-surface); border: 1px solid var(--color-ink-faint); white-space: nowrap;"
       >
-        <span class="w-4 h-4 flex-shrink-0" style={`color: ${tech.color};`} set:html={tech.svg} />
-        <span class="text-xs font-medium" style="color: var(--color-ink);">{tech.name}</span>
+        <span
+          class="w-4 h-4 flex-shrink-0 [&_svg]:w-full [&_svg]:h-full [&_svg]:block"
+          style="color: var(--color-ink);"
+          set:html={tech.svg}
+        />
+        <span class="text-xs font-medium tracking-wide" style="color: var(--color-ink);">
+          {tech.name}
+        </span>
       </div>
     ))}
   </div>
@@ -40,7 +82,7 @@ const doubled = [...techs, ...techs];
 
 <style>
   .marquee-track {
-    animation: marquee 30s linear infinite;
+    animation: marquee 35s linear infinite;
   }
   .marquee-track:hover {
     animation-play-state: paused;
