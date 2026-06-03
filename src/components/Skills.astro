@@ -43,11 +43,6 @@ const categories = skillsData.categories;
 ---
 
 <section id="skills" class="skills-section">
-  <div class="section-header">
-    <p class="section-index">03 / {t.skills.label.toUpperCase()}</p>
-    <h2 class="section-title">Stack</h2>
-  </div>
-
   <div class="skills-wrap">
     {categories.map(category => (
       <div class="skill-group">
@@ -73,28 +68,7 @@ const categories = skillsData.categories;
     padding: 6rem 0;
   }
 
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 4rem;
-  }
-
-  .section-index {
-    font-family: monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-  }
-
-  .section-title {
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
-
-  .skills-wrap {
+.skills-wrap {
     display: flex;
     flex-direction: column;
     gap: 20px;
