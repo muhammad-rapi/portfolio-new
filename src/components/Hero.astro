@@ -31,7 +31,7 @@ const t = {
   </div>
   <h1>
     <span class="name-line">Muhammad</span>
-    <span class="name-line rapi">Rapi.</span>
+    <span class="name-line rapi">Rafi.</span>
   </h1>
   <p class="tagline">{t.tagline}</p>
   <div class="cta-row">
@@ -75,6 +75,7 @@ const t = {
   .status-row {
     position: relative;
     z-index: 1;
+    opacity: 0;
   }
 
   .eyebrow-row {
@@ -219,3 +220,8 @@ const t = {
     }
   }
 </style>
+
+<script>
+  import { initHeroAnimation } from '../scripts/animations';
+  initHeroAnimation();
+</script>
