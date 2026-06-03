@@ -1,100 +1,93 @@
 ---
+import fs from 'fs';
+import path from 'path';
+
 interface Props {
   locale?: 'en' | 'id';
 }
 
 const { locale = 'en' } = Astro.props;
 
-const experiences = [
-  {
-    company: 'Tech Company A',
-    role: locale === 'id' ? 'Senior Full-Stack Developer' : 'Senior Full-Stack Developer',
-    period: '2022 — Sekarang',
-    description: locale === 'id'
-      ? 'Memimpin pengembangan aplikasi web skala enterprise dengan React dan Node.js.'
-      : 'Led development of enterprise web applications with React and Node.js.',
-    current: true,
-  },
-  {
-    company: 'Startup B',
-    role: locale === 'id' ? 'Frontend Developer' : 'Frontend Developer',
-    period: '2020 — 2022',
-    description: locale === 'id'
-      ? 'Membangun UI/UX platform e-commerce menggunakan Vue.js dan Tailwind CSS.'
-      : 'Built UI/UX for e-commerce platform using Vue.js and Tailwind CSS.',
-    current: false,
-  },
-  {
-    company: 'Agency C',
-    role: locale === 'id' ? 'Web Developer' : 'Web Developer',
-    period: '2018 — 2020',
-    description: locale === 'id'
-      ? 'Mengembangkan berbagai website klien menggunakan React dan Next.js.'
-      : 'Developed client websites using React and Next.js.',
-    current: false,
-  },
-];
+// Load experience data from JSON
+const experiencePath = path.join(process.cwd(), 'src', 'content', 'experience.json');
+const experienceData = JSON.parse(fs.readFileSync(experiencePath, 'utf-8'));
+
+const experiences = experienceData.map((exp: any, index: number) => ({
+  ...exp,
+  order: exp.order ?? index,
+}));
+
+// Sort by order
+experiences.sort((a: any, b: any) => a.order - b.order);
 ---
 
-<section id="experience" class="py-24 md:py-32">
-  <div class="container-wide">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-      <!-- Left label -->
-      <div class="lg:col-span-4">
-        <div class="reveal sticky top-24">
-          <p class="font-mono text-xs tracking-widest mb-3" style="color: var(--color-ink-muted);">
-            EXPERIENCE
-          </p>
-          <h2 class="font-display font-bold" style="font-size: 1.75rem; letter-spacing: -0.03em; color: var(--color-ink);">
-            Career Path
-          </h2>
-          <div class="mt-6 w-8 h-0.5 rounded-full" style="background: var(--color-ink);"></div>
-        </div>
-      </div>
-
-      <!-- Right timeline -->
-      <div class="lg:col-span-7 lg:col-start-6">
-        {experiences.map((exp, i) => (
-          <div
-            class="reveal relative pl-8 pb-12 last:pb-0"
-            style={`transition-delay: ${i * 100}ms;`}
-          >
-            <!-- Vertical line -->
-            <div
-              class="absolute left-3 top-1 bottom-0 w-px"
-              style="background: var(--color-ink-faint);"
-            ></div>
-
-            <!-- Current indicator -->
-            {exp.current && (
-              <div class="absolute left-2.5 -top-1 w-1 h-1 rounded-full" style="background: #22c55e;"></div>
-            )}
-
-            <!-- Dot -->
-            <div
-              class="absolute left-0 top-1 w-2 h-2 rounded-full transition-all duration-300 group-hover:scale-125"
-              style="background: var(--color-ink);"
-            ></div>
-
-            <!-- Content -->
-            <div class="mb-1">
-              <div class="flex items-center gap-3 mb-1">
-                <h3 class="font-display font-bold text-base" style="color: var(--color-ink);">
-                  {exp.company}
-                </h3>
-                {exp.current && (
-                  <span class="font-mono text-xs px-2 py-0.5 rounded-full" style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.65rem;">
-                    CURRENT
-                  </span>
-                )}
-              </div>
-              <p class="text-sm mb-2" style="color: var(--color-ink-muted);">{exp.role}</p>
-              <p class="font-mono text-xs mb-3" style="color: var(--color-ink-muted);">{exp.period}</p>
-              <p class="text-sm leading-relaxed" style="color: var(--color-ink-muted);">{exp.description}</p>
-            </div>
-          </div>
-        ))}
+<div class="timeline">
+  {experiences.map((exp: any, i: number) => (
+    <div class={`exp-row${i === experiences.length - 1 ? ' last' : ''}`}>
+      <span class="period">{exp.period}</span>
+      <div class="content">
+        <span class="company">{exp.company}</span>
+        <span class="role">{exp.role}</span>
+        {exp.description && <p class="exp-note">{exp.description}</p>}
       </div>
     </div>
-  </div>
-</section>
+  ))}
+</div>
+
+<style>
+  .timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-row {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .exp-row.last {
+    border-bottom: none;
+  }
+
+  .period {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .company {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.2px;
+  }
+
+  .role {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-sub);
+  }
+
+  .exp-note {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-top: 2px;
+    margin: 0;
+    padding: 0;
+  }
+</style>
