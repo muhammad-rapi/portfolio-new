@@ -72,34 +72,39 @@ const base = locale === 'id' ? '/id' : '';
 
 <script>
 const tabs = document.querySelectorAll<HTMLElement>('.tab');
-// IDs that map to tabs — order matters (top to bottom)
-const sectionIds = ['projects', 'experience', 'stack', 'about', 'writing', 'contact'];
 
-function setActive(id: string) {
-  tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.section === id));
+// section ID → which tab should be active
+const sectionToTab: Record<string, string> = {
+  projects:   'projects',
+  experience: 'projects', // no dedicated tab, map to projects
+  stack:      'projects', // no dedicated tab, map to projects
+  about:      'about',
+  writing:    'writing',
+  contact:    'contact',
+};
+const sectionIds = Object.keys(sectionToTab);
+
+function setActive(tabId: string) {
+  tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.section === tabId));
 }
 
 function onScroll() {
-  const scrollY = window.scrollY;
-  const windowH = window.innerHeight;
-
-  // If near top, activate home
-  if (scrollY < 120) {
+  if (window.scrollY < 120) {
     setActive('home');
     return;
   }
 
-  // Find the last section whose top is above the middle of the viewport
-  let active = 'projects';
+  const mid = window.innerHeight * 0.45;
+  let activeTab = 'projects';
   for (const id of sectionIds) {
     const el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top <= windowH * 0.45) {
-      active = id;
+    if (el && el.getBoundingClientRect().top <= mid) {
+      activeTab = sectionToTab[id];
     }
   }
-  setActive(active);
+  setActive(activeTab);
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
-onScroll(); // run on load
+onScroll();
 </script>
